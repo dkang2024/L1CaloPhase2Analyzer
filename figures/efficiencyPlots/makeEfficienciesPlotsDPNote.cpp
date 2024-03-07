@@ -1,6 +1,7 @@
 /*******************************************************************/
 /* makeEfficienciesPlotDPnote.cpp                                  */
 /* ROOT macro                                                      */
+/* Edited by Ashling Quinn                                         */
 /* Usage: root -l -b -q makeEfficienciesPlotDPNote.cpp             */
 /*        Uncomment code blocks labeled "Plot #1", #2,...          */
 /*        at a time                                                */
@@ -25,14 +26,15 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
 {
   gROOT->ProcessLine(".L calculateEfficiency.cpp");
 
-
-  TString treePath = "l1NtupleProducer/efficiencyTree";
+  /*TString treePath = "l1NtupleProducer/efficiencyTree";*/
+  /*TString treePath2 = "l1NtupleSingleProducer/efficiencyTree";*/
   TString treePath2 = "l1NtupleSingleProducer/efficiencyTree";
 
-  TString rootFileDirectory = "/eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_FlatPt-1To100-gun_oldEmulator.root";
-  TString rootFileDirectory2 = "/eos/user/s/skkwan/phase2RCTDevel/analyzer.root";
+  //TString rootFileDirectory = "/eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_FlatPt-1To100-gun_oldEmulator.root";
+  TString rootFileDirectory2 = "/eos/user/a/aquinn/root/DoubleElectron_combined.root";
+  //TString rootFileDirectory2 = "/eos/user/s/skkwan/phase2RCTDevel/analyzer.root";
   TString signalFileDirectory = ""; //eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_partial.root"; // for the parametric curve
-  TString outputDirectory = "/eos/user/s/skkwan/phase2RCTDevel/figures/efficiencies/";
+  TString outputDirectory = "/eos/user/a/aquinn/figures/efficiencies/";
  
 
   float xMin, xMax;
@@ -96,7 +98,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   l1Cut   = "(abs(genEta) < 1.4841) && (gct_cPt > 25) && (genPt > 30)";
   useVariableBinning = false;
 
-  TGraphAsymmErrors *all_b = calculateEfficiency("genPt", treePath, rootFileDirectory,
+  /*TGraphAsymmErrors *all_b = calculateEfficiency("genPt", treePath, rootFileDirectory,
               l1Cut,
               genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(all_b);
@@ -108,7 +110,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
                                                   genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tight_b);
   vLabels.push_back("TDR emulator with standalone WP");
-  vColors.push_back(kBlue);
+  vColors.push_back(kBlue);*/
 
 
   TGraphAsymmErrors *all2_b = calculateEfficiency("genPt", treePath2, rootFileDirectory2,
@@ -144,7 +146,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   l1Cut   = "(abs(genEta) < 1.4841) && (gct_cPt > 25) && (genPt > 30)";
   useVariableBinning = false;
 
-  TGraphAsymmErrors *allEta = calculateEfficiency("genEta", treePath, rootFileDirectory,
+  /*TGraphAsymmErrors *allEta = calculateEfficiency("genEta", treePath, rootFileDirectory,
               l1Cut,
               genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(allEta);
@@ -156,7 +158,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
                                                   genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tightEta);
   vLabels.push_back("TDR emulator with standalone WP");
-  vColors.push_back(kBlue);
+  vColors.push_back(kBlue);*/
 
   TGraphAsymmErrors *allEta2 = calculateEfficiency("genEta", treePath2, rootFileDirectory2,
                                                    l1Cut,
