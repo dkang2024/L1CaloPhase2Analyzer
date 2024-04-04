@@ -57,6 +57,8 @@ process.load('CalibCalorimetry.CaloTPG.CaloTPGTranscoder_cfi')
 process.load('L1Trigger.L1CaloTrigger.l1tPhase2L1CaloEGammaEmulator_cfi')
 process.load('L1Trigger.L1CaloTrigger.l1tEGammaCrystalsEmulatorProducer_cfi')
 process.load('L1Trigger.L1CaloPhase2Analyzer.l1TCaloEGammaSingleAnalyzer_cfi')
+#Adding new ECAL collection
+process.load('SimCalorimetry.EcalEBTrigPrimProducers.ecalEBTriggerPrimitivePhase2Digis_cfi')
 
 process.pL1EG = cms.Path( process.l1tPhase2L1CaloEGammaEmulator * process.l1tEGammaClusterEmuProducer * process.l1NtupleSingleProducer)
 
@@ -68,8 +70,8 @@ process.TFileService = cms.Service("TFileService",
 process.Out = cms.OutputModule( "PoolOutputModule",
     fileName = cms.untracked.string( "phase2L1EGammaAnalyzer.root" ),
     outputCommands = cms.untracked.vstring(
-
-        "keep *_Phase2L1CaloEGammaEmulator_*_*",
+        "keep *",
+#        "keep *_Phase2L1CaloEGammaEmulator_*_*",
 #        "keep *_TriggerResults_*_*",
 #        "keep *_simHcalTriggerPrimitiveDigis_*_*",
 #        "keep *_EcalEBTrigPrimProducer_*_*"
