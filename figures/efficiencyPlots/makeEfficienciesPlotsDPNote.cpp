@@ -9,6 +9,7 @@
 
 #include "efficiencyHist.cpp"
 #include "calculateEfficiency.cpp"
+#include "calculateResolution.cpp"
 
 #include "../parametricCurve/cutoffValues.h"
 #include "../parametricCurve/fillTH2D.h"
@@ -179,6 +180,35 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
                     "Emulators",                                                                
                     "efficiency_genEta_barrel_l1Ptgt25GeV_genPtgt30GeV",
                     outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");
+  
+  /*******************************************************/
+  /* resolution as a function of genJetPt                */
+  /*******************************************************/
+
+  vReso.clear(); vResoLabels.clear(); vResoColors.clear();
+
+  TH1F* reso1 = calculateResolution("(gct_cPt - genPt)/genPt", treePath, rootFileDirectory,
+               "(abs(genJetEta) < 1.4841) && genJetPt > 30 && gctJet_deltaR < 0.4", -1, 5, useVariableBinning);
+  vReso.push_back(reso1);
+  vResoLabels.push_back("barrel");
+  vResoColors.push_back(kRed);
+
+  TH1F* reso2 = calculateResolution("(gctJet_Pt - genJetPt)/genJetPt", treePath, rootFileDirectory,
+               "(abs(genJetEta) > 1.4841) && (abs(genJetEta) < 3.0) && genJetPt > 30 && gctJet_deltaR < 0.4", -1, 5, useVariableBinning);
+  vReso.push_back(reso2);
+  vResoLabels.push_back("endcap");
+  vResoColors.push_back(kAzure+1);
+
+  TH1F* reso3 = calculateResolution("(gctJet_Pt - genJetPt)/genJetPt", treePath, rootFileDirectory,
+               "(abs(genJetEta) > 3.0) && (abs(genJetEta) < 5.0) && genJetPt > 30 && gctJet_deltaR < 0.4", -1, 5, useVariableBinning);
+  vReso.push_back(reso3);
+  vResoLabels.push_back("forward");
+  vResoColors.push_back(kGreen+1);
+
+  plotNResolutions(vReso, vResoLabels, vResoColors,
+        "Resolution vs Gen p_{T}",
+        "resolution_genJetPt",
+        outputDirectory);
 
 }
 
