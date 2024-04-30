@@ -2,6 +2,9 @@
 /* makeEfficienciesPlotDPnote.cpp                                  */
 /* ROOT macro                                                      */
 /* Edited by Ashling Quinn                                         */
+/* Based on makeEfficienciesPlotDPnote.cpp by Stephanie Kwan       */
+/* and makeEfficienciesPlotJet.cpp by Pallabi Das                  */
+/*                                                                 */
 /* Usage: root -l -b -q makeEfficienciesPlotDPNote.cpp             */
 /*        Uncomment code blocks labeled "Plot #1", #2,...          */
 /*        at a time                                                */
@@ -9,6 +12,7 @@
 
 #include "efficiencyHist.cpp"
 #include "calculateEfficiency.cpp"
+#include "resolutionHist.cpp"
 #include "calculateResolution.cpp"
 
 #include "../parametricCurve/cutoffValues.h"
@@ -29,6 +33,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
 
   /*TString treePath = "l1NtupleProducer/efficiencyTree";*/
   /*TString treePath2 = "l1NtupleSingleProducer/efficiencyTree";*/
+  
   TString treePath2 = "l1NtupleSingleProducer/efficiencyTree";
 
   //TString rootFileDirectory = "/eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_FlatPt-1To100-gun_oldEmulator.root";
@@ -45,7 +50,9 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   std::vector<TGraphAsymmErrors*> vGraphs;
   std::vector<TString> vLabels;
   std::vector<int> vColors;
-
+  std::vector<TH1F*> vReso;
+  std::vector<TString> vResoLabels;
+  std::vector<int> vResoColors;
   
   TString isoCut;
   TString ssCut;
@@ -130,7 +137,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
 
   plotNEfficiencies(vGraphs, vLabels, vColors,
                     "Gen Electron p_{T}",
-                    "Emulators",   
+                    "Phase-2 Simulation",   
                     outputPlotName +  "_standaloneWP_l1Ptgt25GeV_genPtgt30GeV",                                                             
                     outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");  
 
@@ -177,37 +184,25 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
 
   plotNEfficiencies(vGraphs, vLabels, vColors,
                     "Gen Electron #eta",
-                    "Emulators",                                                                
+                    "Phase-2 Simulation",                                                                
                     "efficiency_genEta_barrel_l1Ptgt25GeV_genPtgt30GeV",
                     outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");
   
   /*******************************************************/
-  /* resolution as a function of genJetPt                */
+  /* resolution as a function of genPt                */
   /*******************************************************/
 
   vReso.clear(); vResoLabels.clear(); vResoColors.clear();
 
-  TH1F* reso1 = calculateResolution("(gct_cPt - genPt)/genPt", treePath, rootFileDirectory,
-               "(abs(genJetEta) < 1.4841) && genJetPt > 30 && gctJet_deltaR < 0.4", -1, 5, useVariableBinning);
+  TH1F* reso1 = calculateResolution("(gct_cPt - genPt)/genPt", treePath2, rootFileDirectory2,
+               "(abs(genEta) < 1.4841) && (gct_cPt > 25) && (genPt > 30)", -1, 1, useVariableBinning);
   vReso.push_back(reso1);
   vResoLabels.push_back("barrel");
   vResoColors.push_back(kRed);
 
-  TH1F* reso2 = calculateResolution("(gctJet_Pt - genJetPt)/genJetPt", treePath, rootFileDirectory,
-               "(abs(genJetEta) > 1.4841) && (abs(genJetEta) < 3.0) && genJetPt > 30 && gctJet_deltaR < 0.4", -1, 5, useVariableBinning);
-  vReso.push_back(reso2);
-  vResoLabels.push_back("endcap");
-  vResoColors.push_back(kAzure+1);
-
-  TH1F* reso3 = calculateResolution("(gctJet_Pt - genJetPt)/genJetPt", treePath, rootFileDirectory,
-               "(abs(genJetEta) > 3.0) && (abs(genJetEta) < 5.0) && genJetPt > 30 && gctJet_deltaR < 0.4", -1, 5, useVariableBinning);
-  vReso.push_back(reso3);
-  vResoLabels.push_back("forward");
-  vResoColors.push_back(kGreen+1);
-
   plotNResolutions(vReso, vResoLabels, vResoColors,
         "Resolution vs Gen p_{T}",
-        "resolution_genJetPt",
+        "resolution_genPt",
         outputDirectory);
 
 }
