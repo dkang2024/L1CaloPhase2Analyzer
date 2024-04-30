@@ -84,7 +84,7 @@ void makeRatesPlots(void)
   // one more color if necessary: kAzure-9
   plotNRates(vHists, vLabels, vColors,
              xMin, xMax, yMin, yMax,
-             "ET threshold [GeV]",
+             "Standalone e/#gamma p_{T} (GeV)",
              "rates_barrel_overlaid_standaloneWP",
              outputDirectory,
              useLogy);

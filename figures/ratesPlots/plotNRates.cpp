@@ -98,7 +98,7 @@ void plotNRates(std::vector<TH1F*> hists,
   histDummy->GetXaxis()->SetRangeUser(xMin, xMax);
   histDummy->GetYaxis()->SetRangeUser(yMin, yMax);
   histDummy->GetXaxis()->SetTitle(xAxisLabel);
-  histDummy->GetYaxis()->SetTitle("Rate [kHz]");
+  histDummy->GetYaxis()->SetTitle("L1 Rate (kHz)");
   histDummy->GetXaxis()->SetTitleSize(0.06); // default is 0.03                                                                    
   histDummy->GetYaxis()->SetTitleSize(0.06); // default is 0.03 
 
