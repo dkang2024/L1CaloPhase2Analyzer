@@ -108,7 +108,7 @@ void plotNResolutions(std::vector<TH1F*> graphs,
   histDummy->GetYaxis()->SetTitleOffset(1.25);
   histDummy->GetYaxis()->SetLabelSize(0.03);
   /* Set y-axis limits */  
-  //histDummy->GetYaxis()->SetRangeUser(0.0, 1.5);
+  histDummy->GetYaxis()->SetRangeUser(0.0, 1.0);
   // histDummy->GetYaxis()->SetRangeUser(0.8, 1.02);
 
   /* Customize legend */
@@ -122,12 +122,12 @@ void plotNResolutions(std::vector<TH1F*> graphs,
 
 
   // Default to RCT label, use GCT if not
-  TString emuLabel = "#scale[1.0]{#bf{CMS}} #scale[0.6]{#bf{Phase-2 Simulation}}";
+  TString emuLabel = "#scale[1.0]{#bf{CMS}} #scale[0.6]{#bf{Phase-2 Simulation Preliminary}}";
   if (outputName.Contains("RCT")) {
     emuLabel = "#scale[1.0]{#bf{CMS}} #scale[0.8]{#it{Phase 2 RCT emulator}}";  
   }
   latex->DrawLatex(0.16, 0.960, emuLabel); 
-  latex->DrawLatex(0.76, 0.960, "#scale[0.8]{14 TeV (200 PU)}");
+  latex->DrawLatex(0.76, 0.960, "#scale[0.8]{14 TeV, 200 PU}");
 
 //  if (!(outputName.Contains("genEta")) && !(outputName.Contains("genPhi"))) {  // genPt: put legend below the efficiecy curve
 //    float commentaryXpos = 0.54;

@@ -136,8 +136,8 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   vColors.push_back(kRed);
 
   plotNEfficiencies(vGraphs, vLabels, vColors,
-                    "Gen Electron p_{T}",
-                    "Phase-2 Simulation",   
+                    "Gen Electron p_{T} (GeV)",
+                    "Phase-2 Simulation Preliminary",   
                     outputPlotName +  "_standaloneWP_l1Ptgt25GeV_genPtgt30GeV",                                                             
                     outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");  
 

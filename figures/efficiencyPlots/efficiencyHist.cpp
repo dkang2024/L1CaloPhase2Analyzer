@@ -127,7 +127,7 @@ void plotNEfficiencies(std::vector<TGraphAsymmErrors*> graphs,
     emuLabel = "#scale[1.0]{#bf{CMS}} #scale[0.6]{#it{Phase 2 RCT emulator}}";  
   }
   latex->DrawLatex(0.16, 0.960, emuLabel); 
-  latex->DrawLatex(0.61, 0.960, "#scale[0.6]{14 TeV, 200 PU}"); 
+  latex->DrawLatex(0.76, 0.960, "#scale[0.6]{14 TeV, 200 PU}"); 
 
   // Commentary x and y-position
   float commentaryXpos = 0.50;
@@ -144,7 +144,7 @@ void plotNEfficiencies(std::vector<TGraphAsymmErrors*> graphs,
   float yRow3 = 0.420 + offset;
   float yRow4 = 0.360 + offset;
 
-  latex->DrawLatex(commentaryXpos, yRow1, "#scale[0.7]{Phase-2 L1EG (Crystal, Barrel)}");
+  //latex->DrawLatex(commentaryXpos, yRow1, "#scale[0.7]{Phase-2 L1EG (Crystal, Barrel)}");
   latex->DrawLatex(commentaryXpos, yRow2, "#scale[0.7]{" + comment + "}");
   if (extracomment != "") {
     latex->DrawLatex(commentaryXpos, yRow3, "#scale[0.7]{" + extracomment + "}");
