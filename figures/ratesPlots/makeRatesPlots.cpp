@@ -37,10 +37,10 @@ void makeRatesPlots(void)
   gROOT->ProcessLine(".L calculateRates.cpp");
 
   // Input file and output directory
-  TString rootFileDirectory = "/eos/user/s/skkwan/phase2RCTDevel/analyzer_rates.root";
-  TString outputDirectory = "/eos/user/s/skkwan/phase2RCTDevel/figures/rates/";
+  TString rootFileDirectory = "/afs/cern.ch/work/s/skkwan/public/forAshling/analyzer_rates.root";
+  TString outputDirectory = "/eos/user/a/aquinn/figures/rates/";
 
-  TString rootFileDirectory2 = "/eos/user/s/skkwan/phase2RCTDevel/analyzer_rates_oldEmulator.root";
+  TString rootFileDirectory2 = "/afs/cern.ch/work/s/skkwan/public/forAshling/analyzer_rates_oldEmulator.root";
 
 
   float xMin, xMax;
@@ -63,17 +63,17 @@ void makeRatesPlots(void)
   TString folder = "l1NtupleProducer/";
   TString evHist = "l1NtupleProducer/nEvents";
 
-  TString folder2 = "l1NtupleProducerRates/";
-  TString evHist2 = "l1NtupleProducerRates/nEvents";
+  /*TString folder2 = "l1NtupleProducerRates/";
+  TString evHist2 = "l1NtupleProducerRates/nEvents";*/
 
   TH1F* egVLoose = calculateRates(folder + "l1eg_pt", evHist, rootFileDirectory);
   TH1F* egStandalone = calculateRates(folder + "l1eg_pt_is_iso_is_ss", evHist, rootFileDirectory);
 
-  TH1F* egVLoose2 = calculateRates(folder2 + "l1eg_pt", evHist2, rootFileDirectory2);
+  /*TH1F* egVLoose2 = calculateRates(folder2 + "l1eg_pt", evHist2, rootFileDirectory2);
   TH1F* egStandalone2 = calculateRates(folder2 + "l1eg_pt_is_iso_is_ss", evHist2, rootFileDirectory2);
 
   vHists.push_back(egVLoose2); vLabels.push_back("TDR emulator w/o WP"); vColors.push_back(kGray);
-  vHists.push_back(egStandalone2);  vLabels.push_back("TDR emulator with standalone WP"); vColors.push_back(kBlue);
+  vHists.push_back(egStandalone2);  vLabels.push_back("TDR emulator with standalone WP"); vColors.push_back(kBlue);*/
 
 
   vHists.push_back(egVLoose); vLabels.push_back("Phase 2 emulator w/o WP"); vColors.push_back(kBlack);
@@ -98,11 +98,11 @@ void makeRatesPlots(void)
   TH1F* eg = calculateRates(folder + "l1eg_pt", evHist, rootFileDirectory);
   TH1F* egTk = calculateRates(folder + "l1eg_pt_is_looseTkiso_is_looseTkss", evHist, rootFileDirectory);
 
-  TH1F* eg2 = calculateRates(folder2 + "l1eg_pt", evHist2, rootFileDirectory2);
+  /*TH1F* eg2 = calculateRates(folder2 + "l1eg_pt", evHist2, rootFileDirectory2);
   TH1F* egTk2 = calculateRates(folder2 + "l1eg_pt_is_looseTkiso_is_looseTkss", evHist2, rootFileDirectory2);
 
   vHists.push_back(eg2); vLabels.push_back("TDR emulator w/o WP"); vColors.push_back(kGray);
-  vHists.push_back(egTk2);  vLabels.push_back("TDR emulator with loose Tk WP"); vColors.push_back(kBlue);
+  vHists.push_back(egTk2);  vLabels.push_back("TDR emulator with loose Tk WP"); vColors.push_back(kBlue);*/
 
 
   vHists.push_back(eg); vLabels.push_back("Phase 2 emulator w/o WP"); vColors.push_back(kBlack);
@@ -113,7 +113,7 @@ void makeRatesPlots(void)
   // one more color if necessary: kAzure-9
   plotNRates(vHists, vLabels, vColors,
              xMin, xMax, yMin, yMax,
-             "ET threshold [GeV]",
+             "ET threshold (GeV)",
              "rates_barrel_overlaid_looseTkWP",
              outputDirectory,
              useLogy);
