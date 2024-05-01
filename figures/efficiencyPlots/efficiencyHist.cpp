@@ -122,7 +122,7 @@ void plotNEfficiencies(std::vector<TGraphAsymmErrors*> graphs,
 
 
   // Default to RCT label, use GCT if not
-  TString emuLabel = "#scale[1.0]{#bf{CMS}} #scale[0.6]{#it{" + header + "}}";  
+  TString emuLabel = "#scale[0.7]{#bf{CMS}} #scale[0.6]{#bf{" + header + "}}";  
   if (outputName.Contains("RCT")) {
     emuLabel = "#scale[1.0]{#bf{CMS}} #scale[0.6]{#it{Phase 2 RCT emulator}}";  
   }

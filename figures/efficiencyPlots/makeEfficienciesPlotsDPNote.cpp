@@ -5,7 +5,7 @@
 /* Based on makeEfficienciesPlotDPnote.cpp by Stephanie Kwan       */
 /* and makeEfficienciesPlotJet.cpp by Pallabi Das                  */
 /*                                                                 */
-/* Usage: root -l -b -q makeEfficienciesPlotDPNote.cpp             */
+/* Usage: root -l -b -q makeEfficienciesPlotsDPNote.cpp            */
 /*        Uncomment code blocks labeled "Plot #1", #2,...          */
 /*        at a time                                                */
 /*******************************************************************/
@@ -125,19 +125,19 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
               l1Cut,
               genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(all2_b);
-  vLabels.push_back("Phase 2 emulator w/o WP");
+  vLabels.push_back("#scale[1.1]{Phase 2 emulator w/o WP}");
   vColors.push_back(kBlack);
 
   TGraphAsymmErrors *tight2_b = calculateEfficiency("genPt", treePath2, rootFileDirectory2,  
                                                   l1Cut + redCutString,
                                                   genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tight2_b);
-  vLabels.push_back("Phase 2 emulator with standalone WP");
+  vLabels.push_back("#scale[1.1]{Phase 2 emulator with standalone WP}");
   vColors.push_back(kRed);
 
   plotNEfficiencies(vGraphs, vLabels, vColors,
                     "Gen Electron p_{T} (GeV)",
-                    "Phase-2 Simulation Preliminary",   
+                    "#bf{Phase-2 Simulation Preliminary}",   
                     outputPlotName +  "_standaloneWP_l1Ptgt25GeV_genPtgt30GeV",                                                             
                     outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");  
 
@@ -184,7 +184,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
 
   plotNEfficiencies(vGraphs, vLabels, vColors,
                     "Gen Electron #eta",
-                    "Phase-2 Simulation",                                                                
+                    "#bf{Phase-2 Simulation Preliminary",                                                                
                     "efficiency_genEta_barrel_l1Ptgt25GeV_genPtgt30GeV",
                     outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");
   
