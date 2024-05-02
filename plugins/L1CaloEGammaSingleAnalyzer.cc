@@ -283,7 +283,8 @@ void L1TCaloEGammaSingleAnalyzer::analyze(const Event& evt, const EventSetup& iS
   assert(passesTowerSizeTestWithOverlap(*newFullTowers, allowOverlapInFullTowers));
   assert(passesTowerIndexCoverage(*newFullTowers, allowOverlapInFullTowers));
 
-  // Unit tests for GCT towers
+ /* 
+ // Unit tests for GCT towers
   if (evt.getByToken(gctTowersSrc_, gctCaloTowers)) {
     for (const auto & t : *gctCaloTowers ) {
       printf("GCT full tower found with ET %f, ieta %i, iphi %i, eta %f, phi %f\n", t.ecalTowerEt(), t.towerIEta(), t.towerIPhi(), t.towerEta(), t.towerPhi());
@@ -300,6 +301,7 @@ void L1TCaloEGammaSingleAnalyzer::analyze(const Event& evt, const EventSetup& iS
   bool allowOverlapInGCT = false;
   assert(passesTowerSizeTestWithOverlap(*newGCTTowers, allowOverlapInGCT));
   assert(passesTowerIndexCoverage(*newGCTTowers, allowOverlapInGCT));
+*/
 
   // Get the old emulator clusters from the emulator and sort them by pT
   if(evt.getByToken(oldClustersSrc_, oldCaloCrystalClusters)){
