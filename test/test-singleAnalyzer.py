@@ -70,7 +70,7 @@ process.TFileService = cms.Service("TFileService",
 process.Out = cms.OutputModule( "PoolOutputModule",
     fileName = cms.untracked.string( "phase2L1EGammaAnalyzer.root" ),
     outputCommands = cms.untracked.vstring(
-        "keep *",
+#        "keep *",
 #        "keep *_Phase2L1CaloEGammaEmulator_*_*",
 #        "keep *_TriggerResults_*_*",
 #        "keep *_simHcalTriggerPrimitiveDigis_*_*",
