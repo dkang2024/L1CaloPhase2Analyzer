@@ -1,8 +1,11 @@
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
+from Configuration.Eras.Era_Phase2C17I13M9_cff import Phase2C17I13M9
+from Configuration.Eras.Modifier_phase2_ecal_devel_cff import phase2_ecal_devel
+from Configuration.Eras.Modifier_phase2_ecalTP_devel_cff import phase2_ecalTP_devel
 
-process = cms.Process('REPR',eras.Phase2C17I13M9)
+process = cms.Process('REPR',eras.Phase2C17I13M9,phase2_ecal_devel,phase2_ecalTP_devel)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -37,7 +40,8 @@ process.source = cms.Source("PoolSource",
 # ----   Run the relevant algorithms
 # ---- Global Tag :
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '131X_mcRun4_realistic_v6', '')
+#process.GlobalTag = GlobalTag(process.GlobalTag, '131X_mcRun4_realistic_v6', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase2_realistic_T25', '')
 
 
 # Add HCAL Transcoder
@@ -50,6 +54,7 @@ process.load('CalibCalorimetry.CaloTPG.CaloTPGTranscoder_cfi')
 
 process.load('L1Trigger.L1CaloTrigger.l1tPhase2L1CaloEGammaEmulator_cfi')
 process.load('L1Trigger.L1CaloPhase2Analyzer.l1TCaloEGammaAnalyzer_cfi')
+process.load('SimCalorimetry.EcalEBTrigPrimProducers.ecalEBTriggerPrimitivePhase2Digis_cfi')
 
 process.pL1EG = cms.Path( process.l1tPhase2L1CaloEGammaEmulator *process.l1NtupleProducer )
 
@@ -58,16 +63,18 @@ process.TFileService = cms.Service("TFileService",
     fileName = cms.string('analyzer-test.root')
 )
 
-# process.Out = cms.OutputModule( "PoolOutputModule",
-#     fileName = cms.untracked.string( "phase2L1EGammaAnalyzer.root" ),
-#     outputCommands = cms.untracked.vstring(
-#         "drop *"
+process.Out = cms.OutputModule( "PoolOutputModule",
+    fileName = cms.untracked.string( "phase2L1EGammaAnalyzer.root" ),
+    outputCommands = cms.untracked.vstring(
+        "drop *"
+        "keep *_l1tPhase2L1CaloEGammaEmulator_*_*",
+        "keep *_simEcalEBTriggerPrimitivePhase2Digis_*_*",
 # #        "keep *_Phase2L1CaloEGammaEmulatorProducer_*_*",
 # #        "keep *_TriggerResults_*_*",
 # #        "keep *_simHcalTriggerPrimitiveDigis_*_*",
 # #        "keep *_EcalEBTrigPrimProducer_*_*"
-#     )
-# )
+     )
+ )
 
 
 # process.end = cms.EndPath( process.Out )

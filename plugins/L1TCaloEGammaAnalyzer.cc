@@ -395,7 +395,7 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
   for (auto genElectron : genElectrons) {
     RawParticle particle(genElectron.p4());
     particle.setVertex(genElectron.vertex().x(), genElectron.vertex().y(), genElectron.vertex().z(), 0.);
-    if (fabs(genElectron.pdgId())==11) particle.setMass(.511);
+    if (fabs(genElectron.pdgId())==11) particle.setMass(0);
     else particle.setMass(0.);
     
     int pdgId = genElectron.pdgId();
