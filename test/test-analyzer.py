@@ -60,7 +60,7 @@ process.pL1EG = cms.Path( process.l1tPhase2L1CaloEGammaEmulator *process.l1Ntupl
 
 # output file
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string('analyzer-test.root')
+    fileName = cms.string('analyzer-NewECAL-test.root')
 )
 
 process.Out = cms.OutputModule( "PoolOutputModule",
