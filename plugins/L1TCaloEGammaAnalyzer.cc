@@ -261,6 +261,8 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
     std::cout<<"ERROR GETTING THE ECAL TPGS"<<std::endl;
   else
     for (const auto& hit : *ecalTPGs.product()) {
+      std::cout<<"i'm here"<<std::endl;
+    
       if (hit.encodedEt() > 0)  // hit.encodedEt() returns an int corresponding to 2x the crystal Et
 	{
 	  // Et is 10 bit, by keeping the ADC saturation Et at 120 GeV it means that you have to divide by 8
