@@ -19,6 +19,8 @@ process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.SimL1Emulator_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+process.load('Configuration.StandardSequences.Digi_cff')
+process.load('Configuration.StandardSequences.DigiToRaw_cff')
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
@@ -35,6 +37,7 @@ process.source = cms.Source("PoolSource",
 
 # process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange("1:3774")
 # process.source.eventsToProcess = cms.untracked.VEventRange("1:667914")
+
 # --------------------------------------------------------------------------------------------                                                    
 #                                                                                                                                                            
 # ----   Run the relevant algorithms
@@ -54,9 +57,13 @@ process.load('CalibCalorimetry.CaloTPG.CaloTPGTranscoder_cfi')
 
 process.load('L1Trigger.L1CaloTrigger.l1tPhase2L1CaloEGammaEmulator_cfi')
 process.load('L1Trigger.L1CaloPhase2Analyzer.l1TCaloEGammaAnalyzer_cfi')
+process.load('L1Trigger.L1CaloTrigger.l1tEGammaCrystalsEmulatorProducer_cfi')
 process.load('SimCalorimetry.EcalEBTrigPrimProducers.ecalEBTriggerPrimitivePhase2Digis_cfi')
 
-process.pL1EG = cms.Path( process.l1tPhase2L1CaloEGammaEmulator *process.l1NtupleProducer )
+process.digitisation_step = cms.Path(process.pdigi_valid)
+process.digi2raw_step = cms.Path(process.DigiToRaw)
+
+process.pL1EG = cms.Path( process.simEcalEBTriggerPrimitivePhase2Digis * process.l1tPhase2L1CaloEGammaEmulator * process.l1tEGammaClusterEmuProducer * process.l1NtupleSingleProducer)
 
 # output file
 process.TFileService = cms.Service("TFileService",
@@ -79,7 +86,7 @@ process.Out = cms.OutputModule( "PoolOutputModule",
 
 # process.end = cms.EndPath( process.Out )
 
-process.schedule = cms.Schedule(process.pL1EG) #, process.end)
+process.schedule = cms.Schedule(process.digitisation_step, process.digi2raw_step, process.pL1EG)
 
 #dump_file = open("dump_file.py", "w")
 #dump_file.write(process.dumpPython())
