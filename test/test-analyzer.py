@@ -63,7 +63,7 @@ process.load('SimCalorimetry.EcalEBTrigPrimProducers.ecalEBTriggerPrimitivePhase
 process.digitisation_step = cms.Path(process.pdigi_valid)
 process.digi2raw_step = cms.Path(process.DigiToRaw)
 
-process.pL1EG = cms.Path( process.simEcalEBTriggerPrimitivePhase2Digis * process.l1tPhase2L1CaloEGammaEmulator * process.l1tEGammaClusterEmuProducer * process.l1NtupleSingleProducer)
+process.pL1EG = cms.Path(process.simEcalEBTriggerPrimitivePhase2Digis * process.l1tPhase2L1CaloEGammaEmulator * process.l1tEGammaClusterEmuProducer * process.l1NtupleProducer)
 
 # output file
 process.TFileService = cms.Service("TFileService",

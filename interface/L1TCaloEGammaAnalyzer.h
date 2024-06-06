@@ -234,7 +234,7 @@ int get5x5TPGs(const int maxTPGPt_eta,
   edm::EDGetTokenT<L1CaloRegionCollection> L1RegionCollection;
   edm::EDGetTokenT<L1CaloEmCollection> L1EMCollection_;
   edm::EDGetTokenT<reco::VertexCollection> vertices_;
-  edm::EDGetTokenT<EcalEBTrigPrimDigiCollection> ecalSrc_; 
+  edm::EDGetTokenT<EcalEBPhase2TrigPrimDigiCollection> ecalSrc_; 
   edm::EDGetTokenT<HcalTrigPrimDigiCollection> hcalSrc_;
   //edm::EDGetTokenT<double> recoPt_;
   //edm::EDGetTokenT<std::string> folderName_;
