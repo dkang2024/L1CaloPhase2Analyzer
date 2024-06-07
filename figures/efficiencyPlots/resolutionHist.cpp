@@ -149,6 +149,7 @@ void plotNResolutions(std::vector<TH1F*> graphs,
 
 
   Tcan->cd();
+  Tcan->SaveAs(outputDir+outputName+".C");
   Tcan->SaveAs(outputDir+outputName+".pdf");
   Tcan->SaveAs(outputDir+outputName+".png");
 

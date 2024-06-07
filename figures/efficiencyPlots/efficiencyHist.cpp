@@ -156,6 +156,7 @@ void plotNEfficiencies(std::vector<TGraphAsymmErrors*> graphs,
 
   TString title;
   title = outputDir+outputName;
+  Tcan->SaveAs(title+".C");
   Tcan->SaveAs(title+".pdf");
   Tcan->SaveAs(title+".png");
 
