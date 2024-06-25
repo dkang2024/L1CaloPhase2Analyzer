@@ -118,7 +118,8 @@ L1TCaloEGammaAnalyzer::L1TCaloEGammaAnalyzer( const ParameterSet & cfg ) :
     displayTree->Branch("offlineJets", "vector<TLorentzVector>", &offlineJets, 32000, 0);
     displayTree->Branch("genJets", "vector<TLorentzVector>", &genJets, 32000, 0);
     displayTree->Branch("gctCaloJets", "vector<TLorentzVector>", &gctCaloJets, 32000, 0);
-    displayTree->Branch("genParts",  "vector<TLorentzVector>", &genParts, 32000, 0);
+    displayTree->Branch("genTaus",  "vector<TLorentzVector>", &genTaus, 32000, 0);
+    displayTree->Branch("genQuarks", "vector<TLorentzVector>", &genQuarks, 32000, 0);
 
     efficiencyTree = tfs_->make<TTree>("efficiencyTree", "Efficiency Tree");
     
@@ -238,7 +239,8 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& es )
   allEcalTPGs->clear(); 
   allHcalTPGs->clear();
   allHgcalTowers->clear();
-  genParts->clear();
+  genTaus->clear();
+  genQuarks->clear();
   //hgcal_ieta->clear();
   //hgcal_iphi->clear();
 
@@ -524,7 +526,8 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& es )
     if ( ptr->status() == 23 && (abs(ptr->pdgId()) == 15 || abs(ptr->pdgId()) < 9)) {
       TLorentzVector temp;
       temp.SetPtEtaPhiE(ptr->pt(), ptr->eta(), ptr->phi(), ptr->energy());
-      genParts->push_back(temp);
+      if(abs(ptr->pdgId()) == 15) genTaus->push_back(temp);
+      if(abs(ptr->pdgId()) < 9) genQuarks->push_back(temp);
     }
     if ( (abs(ptr->pdgId()) == 11) && ( abs(ptr->eta()) < 1.4841 )) genElectrons.push_back(*ptr);
     if ( (abs(ptr->pdgId()) == 211) && ( abs(ptr->eta()) < 1.4841 )) genPions.push_back(*ptr);

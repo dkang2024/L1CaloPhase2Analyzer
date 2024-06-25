@@ -152,7 +152,8 @@ void plotEventDisplayPhaseIICaloJets(){
   TTreeReaderValue<vector<TLorentzVector>> vOfflineJets(myReader, "offlineJets");
   TTreeReaderValue<vector<TLorentzVector>> vGctCaloJets(myReader, "gctCaloJets");
   TTreeReaderValue<vector<TLorentzVector>> vGenJets(myReader, "genJets");
-  TTreeReaderValue<vector<TLorentzVector>> vGenParts(myReader, "genParts");
+  TTreeReaderValue<vector<TLorentzVector>> vGenTaus(myReader, "genTaus");
+  TTreeReaderValue<vector<TLorentzVector>> vGenQuarks(myReader, "genQuarks");
   TTreeReaderValue<int> vEvent(myReader, "event");
 
   float etaValues[95] = {-5.2665, -5.1155, -4.92125, -4.71475, -4.53875, -4.36375, -4.1895, -4.014, -3.83875, -3.664, -3.489, -3.314, -3.045, -2.958, -2.871, -2.784, -2.697, -2.61, -2.523, -2.436, -2.349, -2.262, -2.175, -2.088, -2.001, -1.914, -1.827, -1.74, -1.653, -1.566, -1.479, -1.392, -1.305, -1.218, -1.131, -1.044, -0.957, -0.87, -0.783, -0.696, -0.609, -0.522, -0.435, -0.348, -0.261, -0.174, -0.087, 0, 0.087, 0.174, 0.261, 0.348, 0.435, 0.522, 0.609, 0.696, 0.783, 0.87, 0.957, 1.044, 1.131, 1.218, 1.305, 1.392, 1.479, 1.566, 1.653, 1.74, 1.827, 1.914, 2.001, 2.088, 2.175, 2.262, 2.349, 2.436, 2.523, 2.61, 2.697, 2.784, 2.871, 2.958, 3.045, 3.314, 3.489, 3.664, 3.83875, 4.014, 4.1895, 4.36375, 4.53875, 4.71475, 4.92125, 5.1155, 5.2665};
@@ -186,7 +187,8 @@ void plotEventDisplayPhaseIICaloJets(){
   TH2F   *h2OfflineJets    = new TH2F("h2OfflineJets", "Event Display", 94, etaValues, 72, phiValues);
   TH2F   *h2GctCaloJets    = new TH2F("h2GctCaloJets", "Event Display", 94, etaValues, 72, phiValues);
   TH2F   *h2GenJets        = new TH2F("h2GenJets", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2GenParts       = new TH2F("h2GenParts", "Event Display", 94, etaValues, 72, phiValues);
+  TH2F   *h2GenTaus        = new TH2F("h2GenTaus", "Event Display", 94, etaValues, 72, phiValues);
+  TH2F   *h2GenQuarks      = new TH2F("h2GenQuarks", "Event Display", 94, etaValues, 72, phiValues);
   
   h->SetFillColor(48);
   int event = *vEvent;
@@ -196,6 +198,10 @@ void plotEventDisplayPhaseIICaloJets(){
   sprintf(name,"Event %u",event);
   std::cout<<event<<std::endl;
   std::cout<<name<<std::endl;
+
+  int ci;
+  TColor *color;
+  //["#1845fb", "#ff5e02", "#c91f16", "#c849a9", "#adad7d", "#86c8dd", "#578dff", "#656364"]
 
   // Get HCAL TPGs
   double hcalMinPt = 0.5;
@@ -223,13 +229,17 @@ void plotEventDisplayPhaseIICaloJets(){
 
   TH2F* h2HcalTpgs2 = (TH2F*)h2HcalTpgs->Clone();
   h2HcalTpgs->SetFillStyle(1001);
-  h2HcalTpgs->SetFillColorAlpha(kSpring+10, 0.8);
-  h2HcalTpgs->SetLineColorAlpha(kSpring+10, 0.8);
+  //h2HcalTpgs->SetFillColorAlpha(kSpring+10, 0.8);
+  //h2HcalTpgs->SetLineColorAlpha(kSpring+10, 0.8);
+  ci = TColor::GetColor("#b9ac70");
+  h2HcalTpgs->SetFillColorAlpha(ci, 0.8);
+  h2HcalTpgs->SetLineColorAlpha(ci, 0.8);
   h2HcalTpgs->GetXaxis()->SetTitle("#eta");
   h2HcalTpgs->GetYaxis()->SetTitle("#phi");
   h2HcalTpgs->SetTitle("");
   h2HcalTpgs->Draw("BOX");
-  h2HcalTpgs2->SetLineColor(kSpring+10);
+  //h2HcalTpgs2->SetLineColor(kSpring+10);
+  h2HcalTpgs2->SetLineColor(ci);
   h2HcalTpgs2->SetLineWidth(1);
   h2HcalTpgs2->Draw("SAME BOXL");
 
@@ -263,10 +273,14 @@ void plotEventDisplayPhaseIICaloJets(){
 
   TH2F* h2EcalTpgs2 = (TH2F*)h2EcalTpgs->Clone();
   h2EcalTpgs->SetFillStyle(1001);
-  h2EcalTpgs->SetFillColorAlpha(kPink+1, 0.8);
-  h2EcalTpgs->SetLineColorAlpha(kPink+1, 0.8);
+  //h2EcalTpgs->SetFillColorAlpha(kPink+1, 0.8);
+  //h2EcalTpgs->SetLineColorAlpha(kPink+1, 0.8);
+  ci = TColor::GetColor("#92dadd");
+  h2EcalTpgs->SetFillColorAlpha(ci, 0.8);
+  h2EcalTpgs->SetLineColor(ci);
   h2EcalTpgs->Draw("SAME BOX");
-  h2EcalTpgs2->SetLineColor(kPink+1);
+  //h2EcalTpgs2->SetLineColor(kPink+1);
+  h2EcalTpgs2->SetLineColor(ci);
   h2EcalTpgs2->SetLineWidth(1);
   h2EcalTpgs2->Draw("SAME BOXL");
 
@@ -295,10 +309,11 @@ void plotEventDisplayPhaseIICaloJets(){
 
   TH2F* h2L1Towers2 = (TH2F*)h2L1Towers->Clone();
   h2L1Towers->SetFillStyle(3444);
-  h2L1Towers->SetFillColor(kAzure+10);
-  h2L1Towers->SetLineColor(kAzure+10);
+  ci = TColor::GetColor("#e76300");
+  h2L1Towers->SetFillColor(ci);
+  h2L1Towers->SetLineColor(ci);
   h2L1Towers->Draw("SAME BOX");
-  h2L1Towers2->SetLineColor(kAzure+10);
+  h2L1Towers2->SetLineColor(ci);
   h2L1Towers2->SetLineWidth(1);
   h2L1Towers2->Draw("SAME BOXL");
 
@@ -325,10 +340,13 @@ void plotEventDisplayPhaseIICaloJets(){
   }
 
   h2HgcalTowers->SetFillStyle(1001);
-  h2HgcalTowers->SetFillColor(kBlue-9);
-  h2HgcalTowers->SetLineColor(kBlue-9);
-  h2HgcalTowers->Draw("SAME BOX");
-  h2HgcalTowers->SetLineColor(kBlue-9);
+  ci = TColor::GetColor("#94a4a2");
+  h2HgcalTowers->SetFillColor(ci);
+  h2HgcalTowers->SetLineColor(ci);
+  //h2HgcalTowers->SetFillColor(kBlue-9);
+  //h2HgcalTowers->SetLineColor(kBlue-9);
+  //h2HgcalTowers->Draw("SAME BOX");
+  //h2HgcalTowers->SetLineColor(kBlue-9);
   h2HgcalTowers->SetLineWidth(1);
   h2HgcalTowers->Draw("SAME BOXL");
 
@@ -355,10 +373,13 @@ void plotEventDisplayPhaseIICaloJets(){
   }
 
   h2HfTowers->SetFillStyle(1001);
-  h2HfTowers->SetFillColor(kBlue-6);
-  h2HfTowers->SetLineColor(kBlue-6);
-  h2HfTowers->Draw("SAME BOX");
-  h2HfTowers->SetLineColor(kBlue-6);
+  ci = TColor::GetColor("#3f90da");
+  //h2HfTowers->SetFillColor(kBlue-6);
+  //h2HfTowers->SetLineColor(kBlue-6);
+  //h2HfTowers->Draw("SAME BOX");
+  //h2HfTowers->SetLineColor(kBlue-6);
+  h2HfTowers->SetFillColor(ci);
+  h2HfTowers->SetLineColor(ci);
   h2HfTowers->SetLineWidth(1);
   h2HfTowers->Draw("SAME BOXL");
 
@@ -396,20 +417,22 @@ void plotEventDisplayPhaseIICaloJets(){
   //h2OfflineJets->Draw("SAME BOXL");
 
   double genJetMinPt = 10.;
+  ci = TColor::GetColor("#717581");
   std::cout << "[INFO:] plotEventDisplayPhaseIICaloJets.C: do not show gen jets with energy under "
             << genJetMinPt << " GeV " <<std::endl;
-  for (UInt_t j = 0; j < vGenJets->size(); ++j) {
-    float ceta = vGenJets->at(j).Eta();
-    float cphi = vGenJets->at(j).Phi();
-    float cpt  = vGenJets->at(j).Pt();
-    if(cpt > genJetMinPt) {
-      std::cout<<"vGenJets->at(j).Pt() "<< cpt
+  for (UInt_t j = 0; j < vGenQuarks->size(); ++j) {
+    float ceta = vGenQuarks->at(j).Eta();
+    float cphi = vGenQuarks->at(j).Phi();
+    float cpt  = vGenQuarks->at(j).Pt();
+    //if(cpt > genJetMinPt) {
+      std::cout<<"vGenQuarks->at(j).Pt() "<< cpt
                <<" eta "<< ceta 
                <<" phi "<< cphi <<std::endl;
-      h2GenJets->Fill(ceta, cphi, cpt);
+      h2GenQuarks->Fill(ceta, cphi, cpt);
       TEllipse *circ = new TEllipse(ceta,cphi,.4,.4);
       circ->SetFillStyle(0);
-      circ->SetLineColor(kViolet+2);
+      circ->SetLineColor(ci);
+      circ->SetLineWidth(2);
       circ->Draw("SAME");
 
       std::ostringstream strs;
@@ -422,20 +445,28 @@ void plotEventDisplayPhaseIICaloJets(){
       tempText->SetShadowColor(0);
       tempText->SetTextColor(kViolet+2);
       //tempText->Draw("SAME");
-    }
+    //}
   }
-  h2GenJets->SetLineColor(kViolet+2);
-  h2GenJets->SetLineWidth(2); 
+  //h2GenJets->SetLineColor(kViolet+2);
+  h2GenQuarks->SetLineColor(ci);
+  h2GenQuarks->SetLineWidth(2); 
 
-  for (UInt_t j = 0; j < vGenParts->size(); ++j) {
-    float ceta = vGenParts->at(j).Eta();
-    float cphi = vGenParts->at(j).Phi();
-    float cpt  = vGenParts->at(j).Pt();
-    h2GenParts->Fill(ceta, cphi, cpt);
-    TBox *box = new TBox(ceta-0.075,cphi-0.075,ceta+0.075,cphi+0.075);
-    box->SetFillStyle(1001);
-    box->SetFillColor(kAzure+3);
-    box->Draw("SAME");
+  ci = TColor::GetColor("#832db6");
+  for (UInt_t j = 0; j < vGenTaus->size(); ++j) {
+    float ceta = vGenTaus->at(j).Eta();
+    float cphi = vGenTaus->at(j).Phi();
+    float cpt  = vGenTaus->at(j).Pt();
+    h2GenTaus->Fill(ceta, cphi, cpt);
+    //TBox *box = new TBox(ceta-0.075,cphi-0.075,ceta+0.075,cphi+0.075);
+    //box->SetFillStyle(1001);
+    //box->SetFillColor(kAzure+3);
+    //box->SetFillColor(ci);
+    //box->Draw("SAME");
+    TEllipse *circ = new TEllipse(ceta,cphi,.4,.4);
+    circ->SetFillStyle(0);
+    circ->SetLineColor(ci);
+    circ->SetLineWidth(2);
+    circ->Draw("SAME");
 
     std::ostringstream strs;
     strs << cpt;
@@ -448,11 +479,13 @@ void plotEventDisplayPhaseIICaloJets(){
     tempText->SetTextColor(kAzure+3);
     //tempText->Draw("SAME");
   }
-  h2GenParts->SetFillStyle(1001);
-  h2GenParts->SetFillColor(kAzure+3);
-  h2GenParts->SetLineColor(kAzure+3);
+  //h2GenParts->SetFillStyle(1001);
+  //h2GenParts->SetFillColor(kAzure+3);
+  //h2GenParts->SetLineColor(kAzure+3);
   //h2GenParts->Draw("SAME BOX");
-  h2GenParts->SetLineWidth(2);
+  //h2GenParts->SetFillColor(ci);
+  h2GenTaus->SetLineColor(ci);
+  h2GenTaus->SetLineWidth(2);
   //h2GenParts->Draw("SAME BOXL");
 
   // Get the Calo Jets
@@ -478,7 +511,9 @@ void plotEventDisplayPhaseIICaloJets(){
     //tempText->Draw("SAME");
   }
 
-  h2GctCaloJets->SetLineColor(kRed);
+  //h2GctCaloJets->SetLineColor(kRed);
+  ci = TColor::GetColor("#bd1f01");
+  h2GctCaloJets->SetLineColor(ci);
   h2GctCaloJets->SetLineWidth(2);
   h2GctCaloJets->Draw("SAME BOXL");
 
@@ -489,6 +524,7 @@ void plotEventDisplayPhaseIICaloJets(){
   float xR=0.70;
   //TLegend *l = new TLegend(xR,0.80,xR+0.30,1.0);
   TLegend *l = new TLegend(0.82,0.60,0.99,0.9);
+  l->SetBorderSize(0);
   l->SetTextSize(0.03);
 
 //  TLatex *t2a = new TLatex(0.46,0.9," #bf{CMS} #it{Phase-2 Simulation Preliminary}                14 TeV, 200PU   ");
@@ -524,9 +560,9 @@ void plotEventDisplayPhaseIICaloJets(){
   l->AddEntry(h2L1Towers,    "GCT Towers",      "F");
   l->AddEntry(h2HgcalTowers, "HGCal Towers",    "F");
   l->AddEntry(h2HfTowers,    "HF Towers",       "F");
-  l->AddEntry(h2GenParts,    "Gen Particles",   "F");
-  l->AddEntry(h2GenJets,     "Gen Jets",        "F");
-  l->AddEntry(h2GctCaloJets, "GCT Jets",    "F");
+  l->AddEntry(h2GenTaus,    "GEN Taus",        "F");
+  l->AddEntry(h2GenQuarks,     "GEN Quarks",      "F");
+  l->AddEntry(h2GctCaloJets, "GCT Jets",        "F");
   //l->AddEntry(h2OfflineJets, "Offline Jets",    "F");
   //l->AddEntry(h2GenJets,     "Gen Jets",        "F");
   //l->AddEntry(h2GenParts,    "Gen Particles",   "F"); 
@@ -534,10 +570,10 @@ void plotEventDisplayPhaseIICaloJets(){
  
   char* saveFile = new char[200];
    
-  sprintf(saveFile,"/eos/user/p/pdas/www/emulator_phase2/14_1_0/Event-%u-phase2emulator.png",event);
+  sprintf(saveFile,"/eos/user/p/pdas/www/emulator_phase2/14_1_0/Event-%u-phase2emulator_new.png",event);
   c1->SaveAs(saveFile);
 
-  sprintf(saveFile,"/eos/user/p/pdas/www/emulator_phase2/14_1_0/Event-%u-phase2emulator.pdf",event);
+  sprintf(saveFile,"/eos/user/p/pdas/www/emulator_phase2/14_1_0/Event-%u-phase2emulator_new.pdf",event);
   c1->SaveAs(saveFile);
   }
 

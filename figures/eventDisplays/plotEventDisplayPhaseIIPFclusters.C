@@ -139,7 +139,7 @@ void plotEventDisplayPhaseIIPFclusters(){
   
   gStyle->SetOptStat(0);
   
-  TFile *f = TFile::Open("/afs/cern.ch/work/p/pdas/emulator_phase2/calojet/sep2023/njets/CMSSW_14_1_0_pre1/src/L1Trigger/L1CaloPhase2Analyzer/test/analyzer.root", "READ");
+  TFile *f = TFile::Open("/afs/cern.ch/work/p/pdas/emulator_phase2/calojet/sep2023/njets/CMSSW_14_1_0_pre1/src/L1Trigger/L1CaloPhase2Analyzer/test/analyzer_hftest.root", "READ");
 
   if (!f) { return; }
 
