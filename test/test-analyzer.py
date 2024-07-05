@@ -23,7 +23,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.StandardSequences.Digi_cff')
 process.load('Configuration.StandardSequences.DigiToRaw_cff')
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
@@ -68,7 +68,7 @@ process.pL1EG = cms.Path(process.simEcalEBTriggerPrimitivePhase2Digis * process.
 
 # output file
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string('analyzer-NewECAL-test.root')
+    fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test.root')
 )
 
 process.Out = cms.OutputModule( "PoolOutputModule",

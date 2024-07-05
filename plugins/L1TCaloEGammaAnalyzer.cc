@@ -29,8 +29,7 @@
 #include "DataFormats/HcalDetId/interface/HcalDetId.h"
 
 // ECAL TPs
-#include "DataFormats/EcalDigi/interface/EcalEBPhase2TriggerPrimitiveDigi.h"
-#include "DataFormats/EcalDigi/interface/EBDataFrame_Ph2.h"
+#include "DataFormats/EcalDigi/interface/EcalDigiCollections.h"
 
 // HCAL TPs
 #include "DataFormats/HcalDigi/interface/HcalTriggerPrimitiveDigi.h"
@@ -53,6 +52,8 @@
 #include "CommonTools/BaseParticlePropagator/interface/BaseParticlePropagator.h"
 #include "CommonTools/BaseParticlePropagator/interface/RawParticle.h"
 
+#include "DataFormats/EcalDigi/interface/EcalEBPhase2TriggerPrimitiveDigi.h"
+#include "DataFormats/EcalDigi/interface/EBDataFrame_Ph2.h"
 
 using namespace edm;
 using std::cout;
@@ -257,59 +258,89 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
   std::sort(gctClusterInfo->begin(), gctClusterInfo->end(), L1TCaloEGammaAnalyzer::compareClusterPt);
 
   // get the ECAL inputs (i.e. ECAL crystals)
+  //float tmpEtEvMax = 0;
+  //float tmpEtEvMaxEta = 0;
+  //float tmpEtEvMaxPhi = 0;
+  //int tmpEtEvMaxiEta = 0;
+  //int tmpEtEvMaxiPhi = 0;
+  //int tmpMaxTime = 0;
+
   if(!evt.getByToken(ecalSrc_, ecalTPGs))
     std::cout<<"ERROR GETTING THE ECAL TPGS"<<std::endl;
   else
-    for (const auto& hit : *ecalTPGs.product()) {
-      std::cout<<"i'm here"<<std::endl;
-      std::cout<<hit.encodedEt()<<std::endl;
-    
-      if (hit.encodedEt() > 0)  // hit.encodedEt() returns an int corresponding to 2x the crystal Et
-	{
-	  // Et is 10 bit, by keeping the ADC saturation Et at 120 GeV it means that you have to divide by 8
-	  float et = hit.encodedEt();
-	  
-	  if (et < 0.5)
-	    continue;  // keep the 500 MeV ET Cut
-	  
-	  // std::cout << "ECAL hit et: " << et << std::endl;
-	  
-	  // Get cell coordinates and info
-	  auto cell = ebGeometry->getGeometry(hit.id());
-	  
-	  // std::cout << "Found ECAL cell/hit with coordinates " << cell->getPosition().x() << "," 
-	  // 	  << cell->getPosition().y() << "," 
-	  // 	  << cell->getPosition().z() << " and ET (GeV) " 
-	  // 	  << et << std::endl;
-	  
-	  GlobalVector position=GlobalVector(cell->getPosition().x(), cell->getPosition().y(), cell->getPosition().z());
-	  float eta = position.eta();
-	  float phi = position.phi();
-	  TLorentzVector temp ;
-	  temp.SetPtEtaPhiE(et,eta,phi,et);
-	  
-	  // int cc = 28;
-	  // if (getCrystal_phiID(position.phi()) <= getPhiMax_card(cc) &&
-	  //     getCrystal_phiID(position.phi()) >= getPhiMin_card(cc) &&
-	  //     getCrystal_etaID(position.eta()) <= getEtaMax_card(cc) &&
-	  //     getCrystal_etaID(position.eta()) >= getEtaMin_card(cc)){
+    for (unsigned int i = 0; i < ecalTPGs.product()->size(); i++) {
+      EcalEBPhase2TriggerPrimitiveDigi d = (*(ecalTPGs.product()))[i];
+      const EBDetId TPid = d.id();
+      const float enConv = 1998.36/4095;
+      float et = d[0].encodedEt()*enConv;
+      float eta = TPid.approxEta();
+      float phi = (TPid.iphi()*(TMath::Pi()/180));
+      TLorentzVector temp ;
+	    temp.SetPtEtaPhiE(et,eta,phi,et);
+      allEcalTPGs->push_back(temp);
+      //std::cout<<"tmpEtGeV: "<<tmpEtGeV<<std::endl;
+      //if (tmpEtGeV > tmpEtEvMax) {
+        //std::cout<<tmpEtGeV<<"\t"<<tmpEtEvMax<<std::endl;
+        //tmpEtEvMax = tmpEtGeV;
+        //tmpEtEvMaxInd = i;
+        //tmpEtEvMaxEta = TPid.approxEta();
+        //tmpEtEvMaxPhi = (TPid.iphi()*(TMath::Pi()/180));
+        //tmpEtEvMaxiEta = TPid.ieta();
+        //tmpEtEvMaxiPhi = TPid.iphi();
+        //tmpMaxTime = d[0].time();
+      //}
 
-	  //   // TEMP: only use ECAL hits in Card 28                                                                             
-	  //   allEcalTPGs->push_back(temp); 
-
-	  //   if ((getCrystal_etaID(position.eta()) > 29) && (getCrystal_etaID(position.eta()) < 35)) {
-	  //     std::cout << "[CARD " << cc << "]: Found ECAL cell/hit with eta/phi "
-	  // 		<< position.eta() << ", "
-	  // 		<< position.phi() << ", and in-detector phiID and etaID "
-	  // 		<< getCrystal_phiID(position.phi()) << ", "
-	  // 		<< getCrystal_etaID(position.eta()) << ", and ET (GeV) "
-	  // 		<< et << std::endl;
-	  //   }
-	  // }
-	  // TEMP: Debugging purposes only: only add ECAL hits in Card 28
-	  allEcalTPGs->push_back(temp);
-	}
+      //std::cout<<"tmpEtEvMaxGeV: "<<tmpEtEvMax<<std::endl;
     }
+
+
+  //  for (const auto& hit : *ecalTPGs.product()) {
+  //    if (hit.encodedEt() > 0)  // hit.encodedEt() returns an int corresponding to 2x the crystal Et
+  //      {
+  //        // Et is 10 bit, by keeping the ADC saturation Et at 120 GeV it means that you have to divide by 8
+  //        float et = hit.encodedEt() / 8.;
+  //        
+  //        if (et < 0.5)
+  //          continue;  // keep the 500 MeV ET Cut
+  //        
+  //        // std::cout << "ECAL hit et: " << et << std::endl;
+  //        
+  //        // Get cell coordinates and info
+  //        auto cell = ebGeometry->getGeometry(hit.id());
+  //        
+  //        // std::cout << "Found ECAL cell/hit with coordinates " << cell->getPosition().x() << "," 
+  //        // 	  << cell->getPosition().y() << "," 
+  //        // 	  << cell->getPosition().z() << " and ET (GeV) " 
+  //        // 	  << et << std::endl;
+  //        
+  //        GlobalVector position=GlobalVector(cell->getPosition().x(), cell->getPosition().y(), cell->getPosition().z());
+  //        float eta = position.eta();
+  //        float phi = position.phi();
+  //        TLorentzVector temp ;
+  //        temp.SetPtEtaPhiE(et,eta,phi,et);
+  //        
+  //        // int cc = 28;
+  //        // if (getCrystal_phiID(position.phi()) <= getPhiMax_card(cc) &&
+  //        //     getCrystal_phiID(position.phi()) >= getPhiMin_card(cc) &&
+  //        //     getCrystal_etaID(position.eta()) <= getEtaMax_card(cc) &&
+  //        //     getCrystal_etaID(position.eta()) >= getEtaMin_card(cc)){
+
+  //        //   // TEMP: only use ECAL hits in Card 28                                                                             
+  //        //   allEcalTPGs->push_back(temp); 
+
+  //        //   if ((getCrystal_etaID(position.eta()) > 29) && (getCrystal_etaID(position.eta()) < 35)) {
+  //        //     std::cout << "[CARD " << cc << "]: Found ECAL cell/hit with eta/phi "
+  //        // 		<< position.eta() << ", "
+  //        // 		<< position.phi() << ", and in-detector phiID and etaID "
+  //        // 		<< getCrystal_phiID(position.phi()) << ", "
+  //        // 		<< getCrystal_etaID(position.eta()) << ", and ET (GeV) "
+  //        // 		<< et << std::endl;
+  //        //   }
+  //        // }
+  //        // TEMP: Debugging purposes only: only add ECAL hits in Card 28
+  //        //allEcalTPGs->push_back(temp);
+  //      }
+  //  }
   
   //ESHandle<L1CaloHcalScale> hcalScale;
   //es.get<L1CaloHcalScaleRcd>().get(hcalScale);
