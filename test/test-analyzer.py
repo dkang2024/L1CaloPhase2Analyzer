@@ -73,7 +73,7 @@ process.TFileService = cms.Service("TFileService",
 )
 
 process.Out = cms.OutputModule( "PoolOutputModule",
-    fileName = cms.untracked.string( "phase2L1EGammaAnalyzer.root" ),
+    fileName = cms.untracked.string( "/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root" ),
     outputCommands = cms.untracked.vstring(
         "drop *",
         "keep *_simEcalTriggerPrimitiveDigis_*_*",
