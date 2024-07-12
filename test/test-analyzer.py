@@ -68,15 +68,17 @@ process.pL1EG = cms.Path(process.simEcalEBTriggerPrimitivePhase2Digis * process.
 
 # output file
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test.root')
+    #fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test.root')
+    fileName = cms.string('/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root')
 )
 
 process.Out = cms.OutputModule( "PoolOutputModule",
     fileName = cms.untracked.string( "phase2L1EGammaAnalyzer.root" ),
     outputCommands = cms.untracked.vstring(
-        "drop *"
-        "keep *_l1tPhase2L1CaloEGammaEmulator_*_*",
-        "keep *_simEcalEBTriggerPrimitivePhase2Digis_*_*",
+        "keep *"
+ #       "drop *"
+ #       "keep *_l1tPhase2L1CaloEGammaEmulator_*_*",
+ #       "keep *_simEcalEBTriggerPrimitivePhase2Digis_*_*",
 # #        "keep *_Phase2L1CaloEGammaEmulatorProducer_*_*",
 # #        "keep *_TriggerResults_*_*",
 # #        "keep *_simHcalTriggerPrimitiveDigis_*_*",
@@ -85,9 +87,11 @@ process.Out = cms.OutputModule( "PoolOutputModule",
  )
 
 
-# process.end = cms.EndPath( process.Out )
+process.end = cms.EndPath( process.Out )
 
-process.schedule = cms.Schedule(process.digitisation_step, process.digi2raw_step, process.pL1EG)
+#process.schedule = cms.Schedule(process.digitisation_step, process.digi2raw_step, process.pL1EG)
+#want new collection in output root file
+process.schedule = cms.Schedule(process.digitisation_step, process.digi2raw_step, process.pL1EG, process.end)
 
 #dump_file = open("dump_file.py", "w")
 #dump_file.write(process.dumpPython())
