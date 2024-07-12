@@ -68,14 +68,18 @@ process.pL1EG = cms.Path(process.simEcalEBTriggerPrimitivePhase2Digis * process.
 
 # output file
 process.TFileService = cms.Service("TFileService",
-    #fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test.root')
-    fileName = cms.string('/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root')
+    fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test_incorporate_new_collection.root')
+    #fileName = cms.string('/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root')
 )
 
 process.Out = cms.OutputModule( "PoolOutputModule",
     fileName = cms.untracked.string( "phase2L1EGammaAnalyzer.root" ),
     outputCommands = cms.untracked.vstring(
-        "keep *"
+        "drop *",
+        "keep *_simEcalTriggerPrimitiveDigis_*_*",
+        "keep *_simEcalEBTriggerPrimitivePhase2Digis_*_*"
+
+ #       "drop DetIdHGCSampleHGCDataFramesSorted_*_*_*"
  #       "drop *"
  #       "keep *_l1tPhase2L1CaloEGammaEmulator_*_*",
  #       "keep *_simEcalEBTriggerPrimitivePhase2Digis_*_*",
