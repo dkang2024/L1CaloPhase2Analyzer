@@ -62,14 +62,12 @@ process.pL1EG = cms.Path(process.simEcalEBTriggerPrimitivePhase2Digis * process.
 
 # output file
 process.TFileService = cms.Service("TFileService",
-        fileName = cms.string('new_collection.root')
-    #fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test_incorporate_new_collection.root')
+    fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test_incorporate_new_collection_25july.root')
     #fileName = cms.string('/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root')
 )
 
 process.Out = cms.OutputModule( "PoolOutputModule",
-#    fileName = cms.untracked.string( "/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root" ),
-    fileName = cms.untracked.string( "out.root" ),
+    fileName = cms.untracked.string( "/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer_25july.root" ),
     outputCommands = cms.untracked.vstring(
         "drop *",
         "keep *_simEcalTriggerPrimitiveDigis_*_*",
