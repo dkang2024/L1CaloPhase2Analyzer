@@ -1,34 +1,29 @@
 import FWCore.ParameterSet.Config as cms
 
-
-from Configuration.StandardSequences.Eras import eras
 from Configuration.Eras.Era_Phase2C17I13M9_cff import Phase2C17I13M9
 from Configuration.Eras.Modifier_phase2_ecal_devel_cff import phase2_ecal_devel
 from Configuration.Eras.Modifier_phase2_ecalTP_devel_cff import phase2_ecalTP_devel
 
-process = cms.Process('REPR',eras.Phase2C17I13M9,phase2_ecal_devel,phase2_ecalTP_devel)
+process = cms.Process('REPR',Phase2C17I13M9,phase2_ecal_devel,phase2_ecalTP_devel)
 
-# import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
 process.load('SimGeneral.MixingModule.mixNoPU_cfi')
-process.load('Configuration.Geometry.GeometryExtended2026D86Reco_cff')
-process.load('Configuration.Geometry.GeometryExtended2026D86_cff')
+process.load('Configuration.Geometry.GeometryExtended2026D95Reco_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
-process.load('Configuration.StandardSequences.SimL1Emulator_cff')
-process.load('Configuration.StandardSequences.EndOfProcess_cff')
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.StandardSequences.Digi_cff')
 process.load('Configuration.StandardSequences.DigiToRaw_cff')
+process.load('HLTrigger.Configuration.HLT_Fake2_cff')
+process.load('Configuration.StandardSequences.EndOfProcess_cff')
+process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1) )
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-#                                'root://cmsxrootd.fnal.gov///store/mc/Phase2HLTTDRWinter20DIGI/DoubleElectron_FlatPt-1To100/GEN-SIM-DIGI-RAW/PU200_110X_mcRun4_realistic_v3-v2/20000/40A5AD90-B259-4646-B473-2443964A1C15.root',
-                                'root://cms-xrd-global.cern.ch///store/mc/Phase2Fall22DRMiniAOD/DoubleElectron_FlatPt-1To100-gun/GEN-SIM-DIGI-RAW-MINIAOD/PU200_125X_mcRun4_realistic_v2-v1/30000/0024ebea-73de-496a-9d75-6f0a7c3b2ba4.root'
+                                'root://cms-xrd-global.cern.ch//store/mc/Phase2Spring23DIGIRECOMiniAOD/DoubleElectron_FlatPt-1To100-gun/GEN-SIM-DIGI-RAW-MINIAOD/PU200_Trk1GeV_131X_mcRun4_realistic_v5-v1/30000/0083e06c-959e-4ea5-9190-fd73667fcc00.root'
 
                                                       ),
                             inputCommands = cms.untracked.vstring(
@@ -45,7 +40,7 @@ process.source = cms.Source("PoolSource",
 # ---- Global Tag :
 from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, '131X_mcRun4_realistic_v6', '')
-process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase2_realistic_T25', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase2_realistic_T21', '')
 
 
 # Add HCAL Transcoder
@@ -62,40 +57,32 @@ process.load('L1Trigger.L1CaloTrigger.l1tEGammaCrystalsEmulatorProducer_cfi')
 process.load('SimCalorimetry.EcalEBTrigPrimProducers.ecalEBTriggerPrimitivePhase2Digis_cfi')
 
 process.digitisation_step = cms.Path(process.pdigi_valid)
-process.digi2raw_step = cms.Path(process.DigiToRaw)
 
 process.pL1EG = cms.Path(process.simEcalEBTriggerPrimitivePhase2Digis * process.l1tPhase2L1CaloEGammaEmulator * process.l1tEGammaClusterEmuProducer * process.l1NtupleProducer)
 
 # output file
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test_incorporate_new_collection.root')
+        fileName = cms.string('new_collection.root')
+    #fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test_incorporate_new_collection.root')
     #fileName = cms.string('/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root')
 )
 
 process.Out = cms.OutputModule( "PoolOutputModule",
-    fileName = cms.untracked.string( "/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root" ),
+#    fileName = cms.untracked.string( "/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root" ),
+    fileName = cms.untracked.string( "out.root" ),
     outputCommands = cms.untracked.vstring(
         "drop *",
         "keep *_simEcalTriggerPrimitiveDigis_*_*",
         "keep *_simEcalEBTriggerPrimitivePhase2Digis_*_*"
 
- #       "drop DetIdHGCSampleHGCDataFramesSorted_*_*_*"
- #       "drop *"
- #       "keep *_l1tPhase2L1CaloEGammaEmulator_*_*",
- #       "keep *_simEcalEBTriggerPrimitivePhase2Digis_*_*",
-# #        "keep *_Phase2L1CaloEGammaEmulatorProducer_*_*",
-# #        "keep *_TriggerResults_*_*",
-# #        "keep *_simHcalTriggerPrimitiveDigis_*_*",
-# #        "keep *_EcalEBTrigPrimProducer_*_*"
      )
  )
 
 
 process.end = cms.EndPath( process.Out )
 
-#process.schedule = cms.Schedule(process.digitisation_step, process.digi2raw_step, process.pL1EG)
 #want new collection in output root file
-process.schedule = cms.Schedule(process.digitisation_step, process.digi2raw_step, process.pL1EG, process.end)
+process.schedule = cms.Schedule(process.digitisation_step, process.pL1EG)
 
 #dump_file = open("dump_file.py", "w")
 #dump_file.write(process.dumpPython())
