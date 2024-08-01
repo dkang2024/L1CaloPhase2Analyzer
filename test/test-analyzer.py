@@ -19,7 +19,7 @@ process.load('HLTrigger.Configuration.HLT_Fake2_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
