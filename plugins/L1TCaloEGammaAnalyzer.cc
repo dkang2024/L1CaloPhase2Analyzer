@@ -64,6 +64,7 @@ L1TCaloEGammaAnalyzer::L1TCaloEGammaAnalyzer( const ParameterSet & cfg ) :
   decoderToken_(esConsumes<CaloTPGTranscoder, CaloTPGRecord>(edm::ESInputTag("", ""))),
   caloGeometryToken_(esConsumes<CaloGeometry, CaloGeometryRecord>(edm::ESInputTag("", ""))),
   hbTopologyToken_(esConsumes<HcalTopology, HcalRecNumberingRecord>(edm::ESInputTag("", ""))),
+  defaultEcalSrc_(consumes<EcalEBTrigPrimDigiCollection>(edm::InputTag("simEcalEBTriggerPrimitiveDigis"))),
   ecalSrc_(consumes<EcalEBPhase2TrigPrimDigiCollection>(cfg.getParameter<edm::InputTag>("ecalDigis"))),
   hcalSrc_(consumes<HcalTrigPrimDigiCollection>(cfg.getParameter<edm::InputTag>("hcalDigis"))),
   rctClustersSrc_(consumes<l1tp2::CaloCrystalClusterCollection >(cfg.getParameter<edm::InputTag>("rctClusters"))),
@@ -138,6 +139,7 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
   edm::Handle<l1tp2::CaloCrystalClusterCollection> gctCaloCrystalClusters;
   edm::Handle<l1tp2::CaloTowerCollection> gctCaloL1Towers;
   
+  edm::Handle<EcalEBTrigPrimDigiCollection> defaultEcalTPGs;
   edm::Handle<EcalEBPhase2TrigPrimDigiCollection> ecalTPGs;
   edm::Handle<HcalTrigPrimDigiCollection> hcalTPGs;  
   edm::Handle<edm::SortedCollection<HcalTriggerPrimitiveDigi> > hbhecoll;
@@ -264,6 +266,16 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
   //int tmpEtEvMaxiEta = 0;
   //int tmpEtEvMaxiPhi = 0;
   //int tmpMaxTime = 0;
+  if(!evt.getByToken(defaultEcalSrc_, defaultEcalTPGs))
+    std::cout<<"ERROR GETTING THE DEFAULT ECAL TPGS"<<std::endl;
+  else
+    for (const auto& hit : *defaultEcalTPGs.product()) {
+      auto cell = ebGeometry->getGeometry(hit.id());
+      GlobalVector position=GlobalVector(cell->getPosition().x(), cell->getPosition().y(), cell->getPosition().z());
+	    float eta = position.eta();
+	    float phi = position.phi();
+      if (hit.encodedEt() > 0) std::cout<<"Default ECAL digis encoded Et: "<<hit.encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
+    }
 
   if(!evt.getByToken(ecalSrc_, ecalTPGs))
     std::cout<<"ERROR GETTING THE ECAL TPGS"<<std::endl;
@@ -275,6 +287,7 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
       float et = d[0].encodedEt()*enConv;
       float eta = TPid.approxEta();
       float phi = (TPid.iphi()*(TMath::Pi()/180));
+      if (d[0].encodedEt() >0) std::cout<<"New ECAL digis encoded Et: "<<d[0].encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
       TLorentzVector temp ;
 	    temp.SetPtEtaPhiE(et,eta,phi,et);
       allEcalTPGs->push_back(temp);
