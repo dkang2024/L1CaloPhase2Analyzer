@@ -290,6 +290,7 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
       if (d[0].encodedEt() >0) std::cout<<"New ECAL digis encoded Et: "<<d[0].encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
       TLorentzVector temp ;
 	    temp.SetPtEtaPhiE(et,eta,phi,et);
+      if (abs(temp.Phi()) >0)std::cout<<temp.Phi()<<std::endl;
       allEcalTPGs->push_back(temp);
       //std::cout<<"tmpEtGeV: "<<tmpEtGeV<<std::endl;
       //if (tmpEtGeV > tmpEtEvMax) {
