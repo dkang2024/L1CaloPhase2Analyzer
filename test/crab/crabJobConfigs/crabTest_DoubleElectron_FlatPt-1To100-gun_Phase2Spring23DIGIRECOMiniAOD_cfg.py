@@ -15,7 +15,7 @@ config.General.transferLogs = True
 
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
-config.JobType.psetName   = '/eos/user/a/aquinn/DigiCollection_25Jul24/CMSSW_14_1_0_pre5/src/L1Trigger/L1CaloPhase2Analyzer/test/test-analyzer.py'
+config.JobType.psetName   = '/eos/user/a/aquinn/DigiCollection_25Jul24/CMSSW_14_1_0_pre5/src/L1Trigger/L1CaloPhase2Analyzer/test/test-analyzer_crab.py'
 config.JobType.outputFiles = ['analyzer.root']
 
 config.section_("Data")

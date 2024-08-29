@@ -274,7 +274,7 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
       GlobalVector position=GlobalVector(cell->getPosition().x(), cell->getPosition().y(), cell->getPosition().z());
 	    float eta = position.eta();
 	    float phi = position.phi();
-      if (hit.encodedEt() > 0) std::cout<<"Default ECAL digis encoded Et: "<<hit.encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
+      //if (hit.encodedEt() > 0) std::cout<<"Default ECAL digis encoded Et: "<<hit.encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
     }
 
   if(!evt.getByToken(ecalSrc_, ecalTPGs))
@@ -287,10 +287,10 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
       float et = d[0].encodedEt()*enConv;
       float eta = TPid.approxEta();
       float phi = (TPid.iphi()*(TMath::Pi()/180));
-      if (d[0].encodedEt() >0) std::cout<<"New ECAL digis encoded Et: "<<d[0].encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
+      //<<"New ECAL digis encoded Et: "<<d[0].encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
       TLorentzVector temp ;
 	    temp.SetPtEtaPhiE(et,eta,phi,et);
-      if (abs(temp.Phi()) >0)std::cout<<temp.Phi()<<std::endl;
+      //if (abs(temp.Phi()) >0)std::cout<<temp.Phi()<<std::endl;
       allEcalTPGs->push_back(temp);
       //std::cout<<"tmpEtGeV: "<<tmpEtGeV<<std::endl;
       //if (tmpEtGeV > tmpEtEvMax) {
