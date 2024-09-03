@@ -1,8 +1,9 @@
 *~
 *.root
 *.pyc
+*.png
 test/crab/crab_projects/*
-test/crab/crabJobConfigs/*
+
 compare/*.pdf
 compare/*.csv
 compare/*.txt
