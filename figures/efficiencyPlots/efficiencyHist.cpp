@@ -37,6 +37,7 @@
 void plotNEfficiencies(std::vector<TGraphAsymmErrors*> graphs, 
                       std::vector<TString> labels,
                       std::vector<int> colors,
+                      std::vector<int> styles,
                       TString xAxisLabel,
                       TString header,
                       TString outputName,

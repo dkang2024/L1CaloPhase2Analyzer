@@ -43,6 +43,8 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   TString signalFileDirectory = ""; //eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_partial.root"; // for the parametric curve
   TString outputDirectory = "/eos/user/a/aquinn/figures/efficiencies/";
  
+  gStyle->SetOptStat(0);
+  gStyle->SetOptFit(0);
 
   float xMin, xMax;
   TString genCut, l1Cut;
@@ -51,6 +53,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   std::vector<TGraphAsymmErrors*> vGraphs;
   std::vector<TString> vLabels;
   std::vector<int> vColors;
+  std::vector<int> vStyles;
   std::vector<TH1F*> vReso;
   std::vector<TString> vResoLabels;
   std::vector<int> vResoColors;
@@ -100,43 +103,48 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   /* (Plot #1) eff. as a function of gen pT, standalone WP, GCT cluster pT > 25 GeV, genPt > 30 GeV         */
   /**********************************************************************************************************/
 
-  vGraphs.clear();  vLabels.clear();  vColors.clear();
-  xMin = 0;
-  xMax = 100;
-  genCut  = "(abs(genEta) < 1.4841) && (genPt > 30)";
-  l1Cut   = "(abs(genEta) < 1.4841) && (gct_cPt > 25) && (genPt > 30)";
-  useVariableBinning = false;
+ vGraphs.clear();  vLabels.clear();  vColors.clear();  vStyles.clear();
+ xMin = 0;
+ xMax = 100;
+ genCut  = "(abs(genEta) < 1.4841)";
+ l1Cut   = "(abs(genEta) < 1.4841) && (gct_cPt > 25)";
+ useVariableBinning = false;
 
-  /*TGraphAsymmErrors *all_b = calculateEfficiency("genPt", treePath, rootFileDirectory,
-              l1Cut,
-              genCut, xMin, xMax, useVariableBinning);
-  vGraphs.push_back(all_b);
-  vLabels.push_back("TDR emulator w/o WP");
-  vColors.push_back(kGray);
+ /*TGraphAsymmErrors *all_b = calculateEfficiency("genPt", treePath, rootFileDirectory,
+             l1Cut,
+             genCut, xMin, xMax, useVariableBinning);
+ vGraphs.push_back(all_b);
+ vLabels.push_back("TDR emulator w/o WP");
+ vColors.push_back(kGray);
 
-  TGraphAsymmErrors *tight_b = calculateEfficiency("genPt", treePath, rootFileDirectory,  
-                                                  l1Cut + redCutString,
-                                                  genCut, xMin, xMax, useVariableBinning);
+ TGraphAsymmErrors *tight_b = calculateEfficiency("genPt", treePath, rootFileDirectory,  
+                                                 l1Cut + redCutString,
+                                                 genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tight_b);
   vLabels.push_back("TDR emulator with standalone WP");
   vColors.push_back(kBlue);*/
 
 
-  TGraphAsymmErrors *all2_b = calculateEfficiency("genPt", treePath2, rootFileDirectory2,
-              l1Cut,
-              genCut, xMin, xMax, useVariableBinning);
-  vGraphs.push_back(all2_b);
-  vLabels.push_back("#scale[1.1]{Phase 2 emulator w/o WP}");
-  vColors.push_back(kBlack);
+ TGraphAsymmErrors *all2_b = calculateEfficiency("genPt", treePath2, rootFileDirectory2,
+             l1Cut,
+             genCut, xMin, xMax, useVariableBinning);
+ vGraphs.push_back(all2_b);
+ vLabels.push_back("#scale[1.2]{Standalone e/#gamma w/o WP}");
+ int ci;
+ ci = TColor::GetColor("#5790fc");
+ vColors.push_back(ci);
+ vStyles.push_back(20);
 
-  TGraphAsymmErrors *tight2_b = calculateEfficiency("genPt", treePath2, rootFileDirectory2,  
-                                                  l1Cut + redCutString,
-                                                  genCut, xMin, xMax, useVariableBinning);
+ TGraphAsymmErrors *tight2_b = calculateEfficiency("genPt", treePath2, rootFileDirectory2,  
+                                                 l1Cut + redCutString,
+                                                 genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tight2_b);
-  vLabels.push_back("#scale[1.1]{Phase 2 emulator with standalone WP}");
-  vColors.push_back(kRed);
+  vLabels.push_back("#scale[1.2]{Standalone e/#gamma with WP}");
+  ci = TColor::GetColor("#f89c20");
+  vColors.push_back(ci);
+  vStyles.push_back(21);
 
-  plotNEfficiencies(vGraphs, vLabels, vColors,
+  plotNEfficiencies(vGraphs, vLabels, vColors, vStyles,
                     "Gen Electron p_{T} (GeV)",
                     "#bf{Phase-2 Simulation Preliminary}",   
                     outputPlotName +  "_standaloneWP_l1Ptgt25GeV_genPtgt30GeV",                                                             
@@ -173,21 +181,25 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
                                                    l1Cut,
                                                    genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(allEta2);
-  vLabels.push_back("Phase 2 emulator w/o WP");
-  vColors.push_back(kBlack);
+   vLabels.push_back("#scale[1.2]{Standalone e/#gamma w/o WP}");
+   ci = TColor::GetColor("#5790fc");
+   vColors.push_back(ci);
+   vStyles.push_back(20);
 
   TGraphAsymmErrors *tightEta2 = calculateEfficiency("genEta", treePath2, rootFileDirectory2,
                                                    l1Cut + redCutString,
                                                    genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tightEta2);
-  vLabels.push_back("Phase 2 emulator with standalone WP");
-  vColors.push_back(kRed); 
+   vLabels.push_back("#scale[1.2]{Standalone e/#gamma with WP}");
+   ci = TColor::GetColor("#f89c20");
+   vColors.push_back(ci); 
+   vStyles.push_back(21);
 
-  plotNEfficiencies(vGraphs, vLabels, vColors,
-                    "Gen Electron #eta",
-                    "#bf{Phase-2 Simulation Preliminary}",                                                                
+   plotNEfficiencies(vGraphs, vLabels, vColors, vStyles,
+                     "GEN Photon #eta",
+                     "Phase-2 Simulation Preliminary",                                                                
                     "efficiency_genEta_barrel_l1Ptgt25GeV_genPtgt30GeV",
-                    outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");
+                    outputDirectory, "p_{T}^{GEN #gamma} > 30 GeV, |#eta^{GEN #gamma}| < 1.5", 0.0, 1.02, "p_{T}^{e/#gamma} > 25 GeV");
   
   /*******************************************************/
   /* resolution as a function of genPt                */
@@ -198,11 +210,12 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   TH1F* reso1 = calculateResolution("(gct_cPt - genPt)/genPt", treePath2, rootFileDirectory2,
                "(abs(genEta) < 1.4841) && (gct_cPt > 25) && (genPt > 30)", -1, 1, useVariableBinning);
   vReso.push_back(reso1);
-  vResoLabels.push_back("barrel");
-  vResoColors.push_back(kRed);
+  vResoLabels.push_back("#scale[0.9]{|#eta^{GEN #gamma}| < 1.5}");
+   ci = TColor::GetColor("#5790fc");
+   vResoColors.push_back(ci);
 
   plotNResolutions(vReso, vResoLabels, vResoColors,
-        "Resolution vs Gen p_{T}",
+        "(p_{T}^{e/#gamma} - p_{T}^{GEN #gamma})/p_{T}^{GEN #gamma}",
         "resolution_genPt",
         outputDirectory);
 
