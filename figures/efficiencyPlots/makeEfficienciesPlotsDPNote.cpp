@@ -34,10 +34,11 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   /*TString treePath = "l1NtupleProducer/efficiencyTree";*/
   /*TString treePath2 = "l1NtupleSingleProducer/efficiencyTree";*/
   
-  TString treePath2 = "l1NtupleSingleProducer/efficiencyTree";
+  TString treePath2 = "l1NtupleProducer/efficiencyTree";
 
   //TString rootFileDirectory = "/eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_FlatPt-1To100-gun_oldEmulator.root";
-  TString rootFileDirectory2 = "/eos/user/a/aquinn/root/DoubleElectron_combined.root";
+  //TString rootFileDirectory2 = "/eos/user/a/aquinn/root/DoubleElectron_combined.root";
+  TString rootFileDirectory2 ="/eos/user/a/aquinn/DigiCollection_25Jul24/CrabOutput/DoubleElectronSpring23_LSB1_Combined.root";
   //TString rootFileDirectory2 = "/eos/user/s/skkwan/phase2RCTDevel/analyzer.root";
   TString signalFileDirectory = ""; //eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_partial.root"; // for the parametric curve
   TString outputDirectory = "/eos/user/a/aquinn/figures/efficiencies/";
@@ -184,7 +185,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
 
   plotNEfficiencies(vGraphs, vLabels, vColors,
                     "Gen Electron #eta",
-                    "#bf{Phase-2 Simulation Preliminary",                                                                
+                    "#bf{Phase-2 Simulation Preliminary}",                                                                
                     "efficiency_genEta_barrel_l1Ptgt25GeV_genPtgt30GeV",
                     outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");
   
