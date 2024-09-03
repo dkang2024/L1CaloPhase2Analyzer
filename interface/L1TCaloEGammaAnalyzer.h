@@ -62,8 +62,8 @@
 #include "L1Trigger/L1TGlobal/interface/TriggerMenuFwd.h"
 #include "DataFormats/L1Trigger/interface/Tau.h"
 #include "DataFormats/L1CaloTrigger/interface/L1CaloRegion.h"
-#include "L1Trigger/L1TCaloLayer1/src/UCTRegion.hh"
-#include "L1Trigger/L1TCaloLayer1/src/UCTGeometry.hh"
+//#include "L1Trigger/L1TCaloLayer1/src/UCTRegion.hh"
+//#include "L1Trigger/L1TCaloLayer1/src/UCTGeometry.hh"
 #include "DataFormats/L1TCalorimeterPhase2/interface/CaloCrystalCluster.h"
 
 #include "DataFormats/EcalDigi/interface/EcalEBPhase2TriggerPrimitiveDigi.h"
@@ -234,6 +234,7 @@ int get5x5TPGs(const int maxTPGPt_eta,
   edm::EDGetTokenT<L1CaloRegionCollection> L1RegionCollection;
   edm::EDGetTokenT<L1CaloEmCollection> L1EMCollection_;
   edm::EDGetTokenT<reco::VertexCollection> vertices_;
+  edm::EDGetTokenT<EcalEBTrigPrimDigiCollection> defaultEcalSrc_;
   edm::EDGetTokenT<EcalEBPhase2TrigPrimDigiCollection> ecalSrc_; 
   edm::EDGetTokenT<HcalTrigPrimDigiCollection> hcalSrc_;
   //edm::EDGetTokenT<double> recoPt_;
