@@ -19,7 +19,7 @@ process.load('HLTrigger.Configuration.HLT_Fake2_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1) )
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
@@ -64,7 +64,7 @@ process.pL1EG = cms.Path(process.simEcalEBTriggerPrimitivePhase2Digis * process.
 
 # output file
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-test_all_14aug.root')
+    fileName = cms.string('/afs/cern.ch/user/a/aquinn/analyzer-NewECAL-LSB_0.125-13Sep-oneEvent.root')
     #fileName = cms.string('/afs/cern.ch/user/a/aquinn/phase2L1EGammaAnalyzer.root')
 )
 
