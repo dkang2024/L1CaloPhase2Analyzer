@@ -34,10 +34,11 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
   /*TString treePath = "l1NtupleProducer/efficiencyTree";*/
   /*TString treePath2 = "l1NtupleSingleProducer/efficiencyTree";*/
   
+  TString treePath = "l1NtupleSingleProducer/efficiencyTree";
   TString treePath2 = "l1NtupleProducer/efficiencyTree";
 
   //TString rootFileDirectory = "/eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_FlatPt-1To100-gun_oldEmulator.root";
-  //TString rootFileDirectory2 = "/eos/user/a/aquinn/root/DoubleElectron_combined.root";
+  TString rootFileDirectory = "/eos/user/a/aquinn/root/DoubleElectron_combined.root";
   TString rootFileDirectory2 ="/eos/user/a/aquinn/DigiCollection_25Jul24/CrabOutput/DoubleElectronSpring23_LSB1_Combined.root";
   //TString rootFileDirectory2 = "/eos/user/s/skkwan/phase2RCTDevel/analyzer.root";
   TString signalFileDirectory = ""; //eos/user/s/skkwan/phase2RCTDevel/analyzer_DoubleElectron_partial.root"; // for the parametric curve
@@ -110,28 +111,35 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
  l1Cut   = "(abs(genEta) < 1.4841) && (gct_cPt > 25)";
  useVariableBinning = false;
 
- /*TGraphAsymmErrors *all_b = calculateEfficiency("genPt", treePath, rootFileDirectory,
+// Plots without number 2 are LSB = 0.125 
+
+ TGraphAsymmErrors *all_b = calculateEfficiency("genPt", treePath, rootFileDirectory,
              l1Cut,
              genCut, xMin, xMax, useVariableBinning);
  vGraphs.push_back(all_b);
- vLabels.push_back("TDR emulator w/o WP");
- vColors.push_back(kGray);
+ vLabels.push_back("#scale[1]{Standalone e/ #gamma w/o WP, LSB = 0.125}");
+ int ci;
+ ci = TColor::GetColor("#e42536"); //red
+ vColors.push_back(ci);
+ vStyles.push_back(20);
 
  TGraphAsymmErrors *tight_b = calculateEfficiency("genPt", treePath, rootFileDirectory,  
                                                  l1Cut + redCutString,
                                                  genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tight_b);
-  vLabels.push_back("TDR emulator with standalone WP");
-  vColors.push_back(kBlue);*/
+  vLabels.push_back("#scale[1]{Standalone e/ #gamma with WP, LSB = 0.125}");
+  
+  ci = TColor::GetColor("#964a8b"); //purple
+  vColors.push_back(ci);
+  vStyles.push_back(20);
 
-
+ // Plots labeled 2 have LSB = 1
  TGraphAsymmErrors *all2_b = calculateEfficiency("genPt", treePath2, rootFileDirectory2,
              l1Cut,
              genCut, xMin, xMax, useVariableBinning);
  vGraphs.push_back(all2_b);
- vLabels.push_back("#scale[1.2]{Standalone e/#gamma w/o WP}");
- int ci;
- ci = TColor::GetColor("#5790fc");
+ vLabels.push_back("#scale[1]{Standalone e/ #gamma w/o WP, LSB = 1}");
+ ci = TColor::GetColor("#5790fc"); //blue
  vColors.push_back(ci);
  vStyles.push_back(20);
 
@@ -139,8 +147,8 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
                                                  l1Cut + redCutString,
                                                  genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tight2_b);
-  vLabels.push_back("#scale[1.2]{Standalone e/#gamma with WP}");
-  ci = TColor::GetColor("#f89c20");
+  vLabels.push_back("#scale[1]{Standalone e/ #gamma with WP, LSB = 1}");
+  ci = TColor::GetColor("#f89c20"); //yellow
   vColors.push_back(ci);
   vStyles.push_back(21);
 
@@ -148,7 +156,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
                     "Gen Electron p_{T} (GeV)",
                     "#bf{Phase-2 Simulation Preliminary}",   
                     outputPlotName +  "_standaloneWP_l1Ptgt25GeV_genPtgt30GeV",                                                             
-                    outputDirectory, "L1 p_{T} > 25 GeV, |#eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");  
+                    outputDirectory, "L1 p_{T} > 25 GeV, | #eta^{Gen}| < 1.4841", 0.0, 1.02, "Gen p_{T} > 30 GeV");  
 
 
   /***********************************************************************************/
@@ -181,7 +189,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
                                                    l1Cut,
                                                    genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(allEta2);
-   vLabels.push_back("#scale[1.2]{Standalone e/#gamma w/o WP}");
+   vLabels.push_back("#scale[1.2]{Standalone e/ #gamma w/o WP}");
    ci = TColor::GetColor("#5790fc");
    vColors.push_back(ci);
    vStyles.push_back(20);
@@ -190,7 +198,7 @@ void makeEfficienciesPlotForOneScheme(TString mode, bool useOwnIsolationFlag, bo
                                                    l1Cut + redCutString,
                                                    genCut, xMin, xMax, useVariableBinning);
   vGraphs.push_back(tightEta2);
-   vLabels.push_back("#scale[1.2]{Standalone e/#gamma with WP}");
+   vLabels.push_back("#scale[1.2]{Standalone e/ #gamma with WP}");
    ci = TColor::GetColor("#f89c20");
    vColors.push_back(ci); 
    vStyles.push_back(21);

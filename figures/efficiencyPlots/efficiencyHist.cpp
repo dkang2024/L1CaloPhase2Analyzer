@@ -54,7 +54,7 @@ void plotNEfficiencies(std::vector<TGraphAsymmErrors*> graphs,
   TCanvas* Tcan = new TCanvas("Tcan","", 100, 20, 1000, 1000);
   TLegend *leg;
   if (legendPos == "bottomright") {
-    leg = new TLegend(0.40,0.15,0.90,0.45);
+    leg = new TLegend(0.50,0.15,0.60,0.45);
   } 
   else if (legendPos == "topright") {
     leg = new TLegend(0.55,0.65,0.90,0.87);
