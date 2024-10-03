@@ -85,6 +85,7 @@ L1TCaloEGammaAnalyzer::L1TCaloEGammaAnalyzer( const ParameterSet & cfg ) :
     efficiencyTree->Branch("rctTowers",   "vector<TLorentzVector>", &rctTowers, 32000, 0);
     efficiencyTree->Branch("hcalTPGs", "vector<TLorentzVector>", &allHcalTPGs, 32000, 0); 
     efficiencyTree->Branch("ecalTPGs", "vector<TLorentzVector>", &allEcalTPGs, 32000, 0); 
+    efficiencyTree->Branch("defaultEcalTPGs", "vector<TLorentzVector>", &allDefaultEcalTPGs, 32000, 0);
 
 
     efficiencyTree->Branch("gctTowers",   "vector<TLorentzVector>", &gctTowers, 32000, 0);
@@ -157,6 +158,7 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
   gctTowers->clear();
   allEcalTPGs->clear(); 
   allHcalTPGs->clear(); 
+  allDefaultEcalTPGs->clear();
 
   // Detector geometry
   caloGeometry_ = &iSetup.getData(caloGeometryToken_);
@@ -272,8 +274,12 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
     for (const auto& hit : *defaultEcalTPGs.product()) {
       auto cell = ebGeometry->getGeometry(hit.id());
       GlobalVector position=GlobalVector(cell->getPosition().x(), cell->getPosition().y(), cell->getPosition().z());
-	    float eta = position.eta();
-	    float phi = position.phi();
+      float et = hit.encodedEt() * 0.125;
+      float eta = position.eta();
+      float phi = position.phi();
+      TLorentzVector temp ;
+      temp.SetPtEtaPhiE(et,eta,phi,et);
+      if(et > 0.5) allDefaultEcalTPGs->push_back(temp); 
       //if (hit.encodedEt() > 0) std::cout<<"Default ECAL digis encoded Et: "<<hit.encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
     }
 
@@ -282,16 +288,23 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& iSetup 
   else
     for (unsigned int i = 0; i < ecalTPGs.product()->size(); i++) {
       EcalEBPhase2TriggerPrimitiveDigi d = (*(ecalTPGs.product()))[i];
-      const EBDetId TPid = d.id();
-      const float enConv = 1998.36/4095;
-      float et = d[0].encodedEt()*enConv;
-      float eta = TPid.approxEta();
-      float phi = (TPid.iphi()*(TMath::Pi()/180));
-      //<<"New ECAL digis encoded Et: "<<d[0].encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
+
+      //from Nancy:
+      //const EBDetId TPid = d.id();
+      //const float enConv = 1998.36/4095;
+      //float et = d[0].encodedEt()*enConv;
+      //float eta = TPid.approxEta();
+      //float phi = (TPid.iphi()*(TMath::Pi()/180));
+
+      auto cell = ebGeometry->getGeometry(d.id());
+      GlobalVector position=GlobalVector(cell->getPosition().x(), cell->getPosition().y(), cell->getPosition().z());
+      float et = d[0].encodedEt() * 0.5; // asumming LSB 0.5
+      float eta = position.eta();
+      float phi = position.phi();
       TLorentzVector temp ;
-	    temp.SetPtEtaPhiE(et,eta,phi,et);
-      //if (abs(temp.Phi()) >0)std::cout<<temp.Phi()<<std::endl;
-      allEcalTPGs->push_back(temp);
+      temp.SetPtEtaPhiE(et,eta,phi,et);
+      if(et > 0.5) allEcalTPGs->push_back(temp);
+      //<<"New ECAL digis encoded Et: "<<d[0].encodedEt()<<"\t"<<"eta: "<<eta<<"\t"<<"phi: "<<phi<<std::endl;
       //std::cout<<"tmpEtGeV: "<<tmpEtGeV<<std::endl;
       //if (tmpEtGeV > tmpEtEvMax) {
         //std::cout<<tmpEtGeV<<"\t"<<tmpEtEvMax<<std::endl;

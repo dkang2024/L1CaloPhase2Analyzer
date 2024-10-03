@@ -103,7 +103,8 @@ class L1TCaloEGammaAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResour
   std::vector<TLorentzVector> *recoTaus  = new std::vector<TLorentzVector>; 
   std::vector<TLorentzVector> *allRegions  = new std::vector<TLorentzVector>; 
   std::vector<TLorentzVector> *allEcalTPGs  = new std::vector<TLorentzVector>; 
-  std::vector<TLorentzVector> *allHcalTPGs  = new std::vector<TLorentzVector>; 
+  std::vector<TLorentzVector> *allHcalTPGs  = new std::vector<TLorentzVector>;
+  std::vector<TLorentzVector> *allDefaultEcalTPGs  = new std::vector<TLorentzVector>;
   std::vector<TLorentzVector> *signalPFCands  = new std::vector<TLorentzVector>; 
   std::vector<TLorentzVector> *l1Jets  = new std::vector<TLorentzVector>; 
   std::vector<TLorentzVector> *recoJets  = new std::vector<TLorentzVector>; 
