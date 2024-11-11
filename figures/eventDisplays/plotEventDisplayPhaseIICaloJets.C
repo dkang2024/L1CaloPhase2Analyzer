@@ -106,14 +106,15 @@ void DrawRegionLines(){
 void DrawTowerLines(){
   std::vector<TLine*> TowerLines;
 
-  float etaValues[95] = {-5.2665, -5.1155, -4.92125, -4.71475, -4.53875, -4.36375, -4.1895, -4.014, -3.83875, -3.664, -3.489, -3.314, -3.045, -2.958, -2.871, -2.784, -2.697, -2.61, -2.523, -2.436, -2.349, -2.262, -2.175, -2.088, -2.001, -1.914, -1.827, -1.74, -1.653, -1.566, -1.479, -1.392, -1.305, -1.218, -1.131, -1.044, -0.957, -0.87, -0.783, -0.696, -0.609, -0.522, -0.435, -0.348, -0.261, -0.174, -0.087, 0, 0.087, 0.174, 0.261, 0.348, 0.435, 0.522, 0.609, 0.696, 0.783, 0.87, 0.957, 1.044, 1.131, 1.218, 1.305, 1.392, 1.479, 1.566, 1.653, 1.74, 1.827, 1.914, 2.001, 2.088, 2.175, 2.262, 2.349, 2.436, 2.523, 2.61, 2.697, 2.784, 2.871, 2.958, 3.045, 3.314, 3.489, 3.664, 3.83875, 4.014, 4.1895, 4.36375, 4.53875, 4.71475, 4.92125, 5.1155, 5.2665};
+//  float etaValues[95] = {-5.2665, -5.1155, -4.92125, -4.71475, -4.53875, -4.36375, -4.1895, -4.014, -3.83875, -3.664, -3.489, -3.314, -3.045, -2.958, -2.871, -2.784, -2.697, -2.61, -2.523, -2.436, -2.349, -2.262, -2.175, -2.088, -2.001, -1.914, -1.827, -1.74, -1.653, -1.566, -1.479, -1.392, -1.305, -1.218, -1.131, -1.044, -0.957, -0.87, -0.783, -0.696, -0.609, -0.522, -0.435, -0.348, -0.261, -0.174, -0.087, 0, 0.087, 0.174, 0.261, 0.348, 0.435, 0.522, 0.609, 0.696, 0.783, 0.87, 0.957, 1.044, 1.131, 1.218, 1.305, 1.392, 1.479, 1.566, 1.653, 1.74, 1.827, 1.914, 2.001, 2.088, 2.175, 2.262, 2.349, 2.436, 2.523, 2.61, 2.697, 2.784, 2.871, 2.958, 3.045, 3.314, 3.489, 3.664, 3.83875, 4.014, 4.1895, 4.36375, 4.53875, 4.71475, 4.92125, 5.1155, 5.2665};
+  float etaValues[59] = {-2.523, -2.436, -2.349, -2.262, -2.175, -2.088, -2.001, -1.914, -1.827, -1.74, -1.653, -1.566, -1.479, -1.392, -1.305, -1.218, -1.131, -1.044, -0.957, -0.87, -0.783, -0.696, -0.609, -0.522, -0.435, -0.348, -0.261, -0.174, -0.087, 0, 0.087, 0.174, 0.261, 0.348, 0.435, 0.522, 0.609, 0.696, 0.783, 0.87, 0.957, 1.044, 1.131, 1.218, 1.305, 1.392, 1.479, 1.566, 1.653, 1.74, 1.827, 1.914, 2.001, 2.088, 2.175, 2.262, 2.349, 2.436, 2.523 };
 
   float phiValues[73] =
     {-3.142, -3.054, -2.967, -2.880, -2.793, -2.705, -2.618, -2.531, -2.443, -2.356, -2.269, -2.182, -2.094, -2.007, -1.920, -1.833, -1.745, -1.658, -1.571, -1.484, -1.396, -1.309, -1.222, -1.134, -1.047, -0.960, -0.873, -0.785, -0.698, -0.611, -0.524, -0.436, -0.349, -0.262, -0.175, -0.087,
      0.000, 0.087, 0.175, 0.262, 0.349, 0.436, 0.524, 0.611, 0.698, 0.785, 0.873, 0.960, 1.047, 1.134, 1.222, 1.309, 1.396, 1.484, 1.571, 1.658, 1.745, 1.833, 1.920, 2.007, 2.094, 2.182, 2.269, 2.356, 2.443, 2.531, 2.618, 2.705, 2.793, 2.880, 2.967, 3.054, 3.142};
   
   //eta lines
-  for(int i = 1; i < 94; i++){
+  for(int i = 1; i < 58; i++){
     TLine * line = new TLine(etaValues[i], -3.142, etaValues[i], 3.142); 
     line->SetLineColor(kGray);
     line->SetLineStyle(1);
@@ -123,7 +124,8 @@ void DrawTowerLines(){
 
   //phi lines
   for(int i = 1; i < 72; i++){
-    TLine * line = new TLine(-5.2665, phiValues[i], 5.2665, phiValues[i]); 
+    //TLine * line = new TLine(-5.2665, phiValues[i], 5.2665, phiValues[i]); 
+    TLine * line = new TLine(-2.523, phiValues[i], 2.523, phiValues[i]); 
     line->SetLineColor(kGray);
     line->SetLineStyle(1);
     line->SetLineWidth(1);
@@ -156,7 +158,8 @@ void plotEventDisplayPhaseIICaloJets(){
   TTreeReaderValue<vector<TLorentzVector>> vGenQuarks(myReader, "genQuarks");
   TTreeReaderValue<int> vEvent(myReader, "event");
 
-  float etaValues[95] = {-5.2665, -5.1155, -4.92125, -4.71475, -4.53875, -4.36375, -4.1895, -4.014, -3.83875, -3.664, -3.489, -3.314, -3.045, -2.958, -2.871, -2.784, -2.697, -2.61, -2.523, -2.436, -2.349, -2.262, -2.175, -2.088, -2.001, -1.914, -1.827, -1.74, -1.653, -1.566, -1.479, -1.392, -1.305, -1.218, -1.131, -1.044, -0.957, -0.87, -0.783, -0.696, -0.609, -0.522, -0.435, -0.348, -0.261, -0.174, -0.087, 0, 0.087, 0.174, 0.261, 0.348, 0.435, 0.522, 0.609, 0.696, 0.783, 0.87, 0.957, 1.044, 1.131, 1.218, 1.305, 1.392, 1.479, 1.566, 1.653, 1.74, 1.827, 1.914, 2.001, 2.088, 2.175, 2.262, 2.349, 2.436, 2.523, 2.61, 2.697, 2.784, 2.871, 2.958, 3.045, 3.314, 3.489, 3.664, 3.83875, 4.014, 4.1895, 4.36375, 4.53875, 4.71475, 4.92125, 5.1155, 5.2665};
+  //float etaValues[95] = {-5.2665, -5.1155, -4.92125, -4.71475, -4.53875, -4.36375, -4.1895, -4.014, -3.83875, -3.664, -3.489, -3.314, -3.045, -2.958, -2.871, -2.784, -2.697, -2.61, -2.523, -2.436, -2.349, -2.262, -2.175, -2.088, -2.001, -1.914, -1.827, -1.74, -1.653, -1.566, -1.479, -1.392, -1.305, -1.218, -1.131, -1.044, -0.957, -0.87, -0.783, -0.696, -0.609, -0.522, -0.435, -0.348, -0.261, -0.174, -0.087, 0, 0.087, 0.174, 0.261, 0.348, 0.435, 0.522, 0.609, 0.696, 0.783, 0.87, 0.957, 1.044, 1.131, 1.218, 1.305, 1.392, 1.479, 1.566, 1.653, 1.74, 1.827, 1.914, 2.001, 2.088, 2.175, 2.262, 2.349, 2.436, 2.523, 2.61, 2.697, 2.784, 2.871, 2.958, 3.045, 3.314, 3.489, 3.664, 3.83875, 4.014, 4.1895, 4.36375, 4.53875, 4.71475, 4.92125, 5.1155, 5.2665};
+  float etaValues[59] = {-2.523, -2.436, -2.349, -2.262, -2.175, -2.088, -2.001, -1.914, -1.827, -1.74, -1.653, -1.566, -1.479, -1.392, -1.305, -1.218, -1.131, -1.044, -0.957, -0.87, -0.783, -0.696, -0.609, -0.522, -0.435, -0.348, -0.261, -0.174, -0.087, 0, 0.087, 0.174, 0.261, 0.348, 0.435, 0.522, 0.609, 0.696, 0.783, 0.87, 0.957, 1.044, 1.131, 1.218, 1.305, 1.392, 1.479, 1.566, 1.653, 1.74, 1.827, 1.914, 2.001, 2.088, 2.175, 2.262, 2.349, 2.436, 2.523};
 
   float phiValues[73] =
     {-3.142, -3.054, -2.967, -2.880, -2.793, -2.705, -2.618, -2.531, -2.443, -2.356, -2.269, -2.182, -2.094, -2.007, -1.920, -1.833, -1.745, -1.658, -1.571, -1.484, -1.396, -1.309, -1.222, -1.134, -1.047, -0.960, -0.873, -0.785, -0.698, -0.611, -0.524, -0.436, -0.349, -0.262, -0.175, -0.087,
@@ -166,12 +169,13 @@ void plotEventDisplayPhaseIICaloJets(){
   while (myReader.Next()) {
 
   // Create a new canvas
-  TCanvas *c1 = new TCanvas("c1","eta vs phi",200,10,1250,800);
+  //TCanvas *c1 = new TCanvas("c1","eta vs phi",200,10,1250,800);
+  TCanvas *c1 = new TCanvas("c1","eta vs phi",200,10,950,800);
   c1->SetFillColor(0);
   c1->GetFrame()->SetFillColor(0);
   c1->GetFrame()->SetBorderSize(6);
   c1->GetFrame()->SetBorderMode(-1);
-  TPad *p1 = new TPad("pad1", "pad1", 0., 0., 0.9, 1.);
+  TPad *p1 = new TPad("pad1", "pad1", 0., 0., 0.85, 1.);
   p1->Draw();
   p1->cd();
 
@@ -179,16 +183,16 @@ void plotEventDisplayPhaseIICaloJets(){
 
   // Create histograms
   TH1F   *h                = new TH1F("h","This is the eta distribution",100,-4,4);
-  TH2F   *h2EcalTpgs       = new TH2F("h2EcalTpgs", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2HcalTpgs       = new TH2F("h2HcalTpgs", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2HgcalTowers    = new TH2F("h2HgcalTowers", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2HfTowers       = new TH2F("h2HfTowers", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2L1Towers       = new TH2F("h2L1Towers", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2OfflineJets    = new TH2F("h2OfflineJets", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2GctCaloJets    = new TH2F("h2GctCaloJets", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2GenJets        = new TH2F("h2GenJets", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2GenTaus        = new TH2F("h2GenTaus", "Event Display", 94, etaValues, 72, phiValues);
-  TH2F   *h2GenQuarks      = new TH2F("h2GenQuarks", "Event Display", 94, etaValues, 72, phiValues);
+  TH2F   *h2EcalTpgs       = new TH2F("h2EcalTpgs", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2HcalTpgs       = new TH2F("h2HcalTpgs", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2HgcalTowers    = new TH2F("h2HgcalTowers", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2HfTowers       = new TH2F("h2HfTowers", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2L1Towers       = new TH2F("h2L1Towers", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2OfflineJets    = new TH2F("h2OfflineJets", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2GctCaloJets    = new TH2F("h2GctCaloJets", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2GenJets        = new TH2F("h2GenJets", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2GenTaus        = new TH2F("h2GenTaus", "Event Display", 58, etaValues, 72, phiValues);
+  TH2F   *h2GenQuarks      = new TH2F("h2GenQuarks", "Event Display", 58, etaValues, 72, phiValues);
   
   h->SetFillColor(48);
   int event = *vEvent;
@@ -417,7 +421,8 @@ void plotEventDisplayPhaseIICaloJets(){
   //h2OfflineJets->Draw("SAME BOXL");
 
   double genJetMinPt = 10.;
-  ci = TColor::GetColor("#717581");
+  //ci = TColor::GetColor("#717581");
+  ci = TColor::GetColor("#3f90da");
   std::cout << "[INFO:] plotEventDisplayPhaseIICaloJets.C: do not show gen jets with energy under "
             << genJetMinPt << " GeV " <<std::endl;
   for (UInt_t j = 0; j < vGenQuarks->size(); ++j) {
@@ -433,7 +438,7 @@ void plotEventDisplayPhaseIICaloJets(){
       circ->SetFillStyle(0);
       circ->SetLineColor(ci);
       circ->SetLineWidth(2);
-      circ->Draw("SAME");
+      if(abs(ceta) < 2.5) circ->Draw("SAME");
 
       std::ostringstream strs;
       strs << cpt;
@@ -466,7 +471,7 @@ void plotEventDisplayPhaseIICaloJets(){
     circ->SetFillStyle(0);
     circ->SetLineColor(ci);
     circ->SetLineWidth(2);
-    circ->Draw("SAME");
+    if(abs(ceta) < 2.5) circ->Draw("SAME");
 
     std::ostringstream strs;
     strs << cpt;
@@ -523,7 +528,7 @@ void plotEventDisplayPhaseIICaloJets(){
   //gPad->RedrawAxis();
   float xR=0.70;
   //TLegend *l = new TLegend(xR,0.80,xR+0.30,1.0);
-  TLegend *l = new TLegend(0.82,0.60,0.99,0.9);
+  TLegend *l = new TLegend(0.78,0.60,0.99,0.9);
   l->SetBorderSize(0);
   l->SetTextSize(0.03);
 
@@ -537,21 +542,21 @@ void plotEventDisplayPhaseIICaloJets(){
   TLatex *t2a = new TLatex(0.125,0.905,"#bf{CMS}");
   t2a->SetNDC();
   t2a->SetTextFont(42);
-  t2a->SetTextSize(0.045);
+  t2a->SetTextSize(0.04);
   t2a->SetTextAlign(20);
   t2a->Draw("same");
 
-  TLatex *t2b = new TLatex(0.3,0.9,"#bf{Phase-2 Simulation Preliminary}");
+  TLatex *t2b = new TLatex(0.34,0.9,"#bf{#it{Phase-2 Simulation Preliminary}}");
   t2b->SetNDC();
   t2b->SetTextFont(42);
-  t2b->SetTextSize(0.032);
+  t2b->SetTextSize(0.03);
   t2b->SetTextAlign(20);
   t2b->Draw("same");
 
-  TLatex *t2c = new TLatex(0.73,0.9,"#bf{14 TeV, 200PU}");
+  TLatex *t2c = new TLatex(0.67,0.9,"#bf{PU 200 (14 TeV)}");
   t2c->SetNDC();
   t2c->SetTextFont(42);
-  t2c->SetTextSize(0.04);
+  t2c->SetTextSize(0.032);
   t2c->SetTextAlign(20);
   t2c->Draw("same");
 
@@ -559,7 +564,7 @@ void plotEventDisplayPhaseIICaloJets(){
   l->AddEntry(h2HcalTpgs,    "HCAL Towers",     "F");
   l->AddEntry(h2L1Towers,    "GCT Towers",      "F");
   l->AddEntry(h2HgcalTowers, "HGCal Towers",    "F");
-  l->AddEntry(h2HfTowers,    "HF Towers",       "F");
+  //l->AddEntry(h2HfTowers,    "HF Towers",       "F");
   l->AddEntry(h2GenTaus,    "GEN Taus",        "F");
   l->AddEntry(h2GenQuarks,     "GEN Quarks",      "F");
   l->AddEntry(h2GctCaloJets, "GCT Jets",        "F");
@@ -570,10 +575,10 @@ void plotEventDisplayPhaseIICaloJets(){
  
   char* saveFile = new char[200];
    
-  sprintf(saveFile,"/eos/user/p/pdas/www/emulator_phase2/14_1_0/Event-%u-phase2emulator_new.png",event);
+  sprintf(saveFile,"/eos/user/p/pdas/www/emulator_phase2/dp_note/Event-%u-phase2emulator.png",event);
   c1->SaveAs(saveFile);
 
-  sprintf(saveFile,"/eos/user/p/pdas/www/emulator_phase2/14_1_0/Event-%u-phase2emulator_new.pdf",event);
+  sprintf(saveFile,"/eos/user/p/pdas/www/emulator_phase2/dp_note/Event-%u-phase2emulator.pdf",event);
   c1->SaveAs(saveFile);
   }
 
