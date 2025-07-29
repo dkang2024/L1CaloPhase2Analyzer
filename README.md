@@ -2,7 +2,7 @@
 
 ## Description
 
-   Adapted from: https://github.com/skkwan/phase2-l1Calo-analyzer .
+   Adapted from: https://github.com/pallabidas/L1CaloPhase2Analyzer.
    This repo is for running the Phase-2 calo emulator.
    Initial setup follows from: https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideL1TPhase2Instructions , specifically `cms-l1t-offline:l1t-phase2-v3.4.44`.
 
