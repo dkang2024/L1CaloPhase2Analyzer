@@ -38,3 +38,13 @@
    cd L1Trigger/L1CaloPhase2Analyzer/figures/eventDisplays/
    root -l -b -q plotEventDisplayPhaseIICaloJets.C
    ```
+
+## Changes 
+
+   ### Interface:
+    - Added genElectronsStore and genPionsStore as TLorentzVectors (Lines 153, 154)
+
+   ### Plugins: 
+    - Added genElectronsStore and genPionsStore to the displayTree (Lines 125, 126)
+    - Cleared genElectronsStore and genPionsStore (Lines 252, 253)
+    - Added pt, eta, phi, and energy values to genElectronsStore and genPionsStore (Lines 542-544, 550-552)
