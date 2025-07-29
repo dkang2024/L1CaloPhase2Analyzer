@@ -14,7 +14,7 @@
    git cms-init
    git cms-addpkg L1Trigger/L1TCalorimeter
    cd L1Trigger
-   git clone git@github.com:pallabidas/L1CaloPhase2Analyzer.git -b 13_3_0_calojet
+   git clone https://github.com/dkang2024/L1CaloPhase2Analyzer.git -b 13_3_0_calojet
    cd ../
    scram b -j 12
    ```
