@@ -149,6 +149,11 @@ class L1TCaloEGammaAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResour
   std::vector<TLorentzVector> *genTaus = new std::vector<TLorentzVector>;
   std::vector<TLorentzVector> *genQuarks = new std::vector<TLorentzVector>;
 
+  // Added outputs to the emulator
+  std::vector<TLorentzVector> *genElectronsStore = new std::vector<TLorentzVector>;
+  std::vector<TLorentzVector> *genPionsStore = new std::vector<TLorentzVector>;
+
+
   TH1F* isoTau_pt;
   TH1F* isoTau_eta;
   TH1F* isoTau_phi;

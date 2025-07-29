@@ -121,6 +121,10 @@ L1TCaloEGammaAnalyzer::L1TCaloEGammaAnalyzer( const ParameterSet & cfg ) :
     displayTree->Branch("genTaus",  "vector<TLorentzVector>", &genTaus, 32000, 0);
     displayTree->Branch("genQuarks", "vector<TLorentzVector>", &genQuarks, 32000, 0);
 
+    // Added electrons / pions 
+    displayTree->Branch("genElectrons", "vector<TLorentzVector>", &genElectronsStore, 32000, 0);
+    displayTree->Branch("genPions", "vector<TLorentzVector>", &genPionsStore, 32000, 0);
+
     efficiencyTree = tfs_->make<TTree>("efficiencyTree", "Efficiency Tree");
     
     efficiencyTree->Branch("run",    &run,     "run/I");
@@ -243,6 +247,10 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& es )
   genQuarks->clear();
   //hgcal_ieta->clear();
   //hgcal_iphi->clear();
+
+  // Added Values
+  genElectronsStore->clear();
+  genPionsStore->clear();
 
   // Detector geometry
   caloGeometry_ = &es.getData(caloGeometryToken_);
@@ -529,8 +537,22 @@ void L1TCaloEGammaAnalyzer::analyze( const Event& evt, const EventSetup& es )
       if(abs(ptr->pdgId()) == 15) genTaus->push_back(temp);
       if(abs(ptr->pdgId()) < 9) genQuarks->push_back(temp);
     }
-    if ( (abs(ptr->pdgId()) == 11) && ( abs(ptr->eta()) < 1.4841 )) genElectrons.push_back(*ptr);
-    if ( (abs(ptr->pdgId()) == 211) && ( abs(ptr->eta()) < 1.4841 )) genPions.push_back(*ptr);
+    if ( (abs(ptr->pdgId()) == 11) && ( abs(ptr->eta()) < 1.4841 )){
+      // Edited: 
+      TLorentzVector temp;
+      temp.SetPtEtaPhiE(ptr->pt(), ptr->eta(), ptr->phi(), ptr->energy());
+      genElectronsStore->push_back(temp);
+
+      genElectrons.push_back(*ptr);
+    }
+    if ( (abs(ptr->pdgId()) == 211) && ( abs(ptr->eta()) < 1.4841 )){
+      // Edited: 
+      TLorentzVector temp;
+      temp.SetPtEtaPhiE(ptr->pt(), ptr->eta(), ptr->phi(), ptr->energy());
+      genPionsStore->push_back(temp);
+      
+      genPions.push_back(*ptr);
+    }
   }
 
   //************************************************************************************/
