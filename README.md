@@ -28,6 +28,7 @@
    For running the emulator:
    ```
    cd L1Trigger/L1CaloTrigger/test/
+   voms-proxy-init --voms cms 
    cmsRun test_Phase2L1CaloEGammaEmulator.py
    ```
 
