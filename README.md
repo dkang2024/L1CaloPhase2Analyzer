@@ -8,6 +8,7 @@
 ## Setup (do only once)
 
    ```
+   cmssw-el8
    cmsrel CMSSW_14_1_0_pre5
    cd CMSSW_14_1_0_pre5/src
    cmsenv
