@@ -9,6 +9,9 @@
 
    ```
    cmssw-el8
+   ```
+
+   ```
    cmsrel CMSSW_14_1_0_pre5
    cd CMSSW_14_1_0_pre5/src
    cmsenv
@@ -24,6 +27,9 @@
    To get to required files (from just logging on to LXPLUS) [run this before running other commands]: 
    ```
    cmssw-el8
+   ```
+
+   ```
    cd CMSSW_14_1_0_pre5/src
    cmsenv
    ```
