@@ -21,6 +21,10 @@
    ```
 
 ## To run the emulator and create ntuples for the event display, efficiency plots
+   If using DAS in test-analyzer.py:
+   ```
+   voms-proxy-init --voms cms
+   ```
 
    For getting the ntuple:
    ```
