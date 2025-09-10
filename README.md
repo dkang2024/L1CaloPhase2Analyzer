@@ -21,6 +21,13 @@
    ```
 
 ## To run the emulator and create ntuples for the event display, efficiency plots
+   To get to required files (from just logging on to LXPLUS) [run this before running other commands]: 
+   ```
+   cmssw-el8
+   cd CMSSW_14_1_0_pre5/src
+   cmsenv
+   ```
+   
    If using DAS in test-analyzer.py:
    ```
    voms-proxy-init --voms cms
