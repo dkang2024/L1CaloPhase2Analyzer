@@ -6,6 +6,12 @@
    This repo is for running the Phase-2 calo emulator.
    Initial setup follows from: https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideL1TPhase2Instructions , specifically `cms-l1t-offline:l1t-phase2-v3.4.44`.
 
+## Before All Commands: 
+
+   ```
+   cmssw-el7
+   ```
+
 ## Setup (do only once)
 
    ```
