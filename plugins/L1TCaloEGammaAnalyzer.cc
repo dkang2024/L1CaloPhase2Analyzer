@@ -113,6 +113,8 @@ L1TCaloEGammaAnalyzer::L1TCaloEGammaAnalyzer( const ParameterSet & cfg ) :
     //displayTree->Branch("hgcal_ieta", "vector<int>", &hgcal_ieta, 32000, 0);
     //displayTree->Branch("hgcal_iphi", "vector<int>", &hgcal_iphi, 32000, 0);
 
+    // Added gctClusters 
+    displayTree->Branch("gctClusters", "vector<TLorentzVector>", &gctClusters, 32000, 0);
     displayTree->Branch("gctTowers",   "vector<TLorentzVector>", &gctTowers, 32000, 0);
     displayTree->Branch("caloPFClusters", "vector<TLorentzVector>", &caloPFClusters, 32000, 0);
     displayTree->Branch("offlineJets", "vector<TLorentzVector>", &offlineJets, 32000, 0);
